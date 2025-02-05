@@ -345,3 +345,11 @@ document.getElementById("green-flag").addEventListener("click", () => swipe(true
 
 // Show the first profile when the page loads
 showProfile();
+
+// Add touch support for mobile swiping
+const cardStack = document.getElementById("card-stack");
+
+// Initialize Hammer.js for touch gestures
+const hammer = new Hammer(cardStack);
+hammer.on("swipeleft", () => swipe(false)); // Swipe left for red flag
+hammer.on("swiperight", () => swipe(true)); // Swipe right for green flag

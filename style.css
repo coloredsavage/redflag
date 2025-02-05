@@ -1,3 +1,4 @@
+/* Existing CSS */
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -10,6 +11,7 @@ body {
   
   .container {
     text-align: center;
+    padding: 20px;
   }
   
   #card-container {
@@ -71,12 +73,12 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s ease; /* Bouncy transition */
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s ease;
     user-select: none;
     cursor: grab;
-    opacity: 1; /* Full opacity */
-    padding: 20px; /* Add inside padding to the card */
-    box-sizing: border-box; /* Ensure padding is included in the card's dimensions */
+    opacity: 1;
+    padding: 20px;
+    box-sizing: border-box;
   }
   
   /* Stacked Card Effect */
@@ -88,27 +90,57 @@ body {
   .card:nth-child(2) {
     transform: translateY(10px);
     z-index: 2;
-    opacity: 1; /* Full opacity */
+    opacity: 1;
   }
   
   .card:nth-child(3) {
     transform: translateY(20px);
     z-index: 1;
-    opacity: 1; /* Full opacity */
+    opacity: 1;
   }
   
   /* Dragging Effect */
   .card.dragging {
-    transition: none; /* Disable transition while dragging */
+    transition: none;
   }
   
   /* Swipe Animations */
   .card.swipe-left {
-    transform: translateX(-150%) rotate(-20deg); /* Swipe further for bounce effect */
-    opacity: 0; /* Fade out */
+    transform: translateX(-150%) rotate(-20deg);
+    opacity: 0;
   }
   
   .card.swipe-right {
-    transform: translateX(150%) rotate(20deg); /* Swipe further for bounce effect */
-    opacity: 0; /* Fade out */
+    transform: translateX(150%) rotate(20deg);
+    opacity: 0;
+  }
+  
+  /* Mobile Optimization */
+  @media (max-width: 600px) {
+    .container {
+      padding: 10px; /* Reduce padding for smaller screens */
+    }
+  
+    #card-container,
+    #card-stack,
+    .card {
+      width: 250px; /* Reduce card width for mobile */
+      height: 350px; /* Reduce card height for mobile */
+    }
+  
+    .card {
+      font-size: 14px; /* Reduce font size for better readability */
+      padding: 15px; /* Adjust padding for smaller cards */
+    }
+  
+    .buttons {
+      flex-direction: column; /* Stack buttons vertically on mobile */
+      gap: 10px; /* Add space between buttons */
+    }
+  
+    button {
+      width: 100%; /* Make buttons full width */
+      padding: 15px; /* Increase padding for easier tapping */
+      font-size: 14px; /* Adjust font size for buttons */
+    }
   }

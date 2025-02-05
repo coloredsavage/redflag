@@ -201,38 +201,40 @@ function showProfile() {
 }
 
 function swipe(isGreenFlag) {
-  const cardStack = document.getElementById("card-stack");
-  const card = cardStack.querySelector(".card");
-
-  if (card) {
-    const currentProfile = card.textContent;
-
-    // Only add scores for green flags (positive responses)
-    if (isGreenFlag && profileScoring[currentProfile]) {
-      for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
-        profileScores[type] += points;
-      }
-    }
-
-    if (isGreenFlag) {
-      card.classList.add("swipe-right");
-    } else {
-      card.classList.add("swipe-left");
-    }
-
-    card.addEventListener("transitionend", () => {
-      card.remove();
-      setTimeout(() => {
-        currentProfileIndex++;
-        if (currentProfileIndex < MAX_SWIPES) {
-          nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
-          showProfile();
-        } else {
-          showResult();
+    if (currentProfileIndex >= MAX_SWIPES) return; // Prevent swiping after results
+  
+    const cardStack = document.getElementById("card-stack");
+    const card = cardStack.querySelector(".card");
+  
+    if (card) {
+      const currentProfile = card.textContent;
+  
+      // Only add scores for green flags (positive responses)
+      if (isGreenFlag && profileScoring[currentProfile]) {
+        for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
+          profileScores[type] += points;
         }
-      }, 300);
-    }, { once: true });
-  }
+      }
+  
+      if (isGreenFlag) {
+        card.classList.add("swipe-right");
+      } else {
+        card.classList.add("swipe-left");
+      }
+  
+      card.addEventListener("transitionend", () => {
+        card.remove();
+        setTimeout(() => {
+          currentProfileIndex++;
+          if (currentProfileIndex < MAX_SWIPES) {
+            nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
+            showProfile();
+          } else {
+            showResult();
+          }
+        }, 300);
+      }, { once: true });
+    }
 }
 
 // Function to make a card draggable
@@ -308,36 +310,44 @@ function drag(e) {
 
 // Function to show the final result
 function showResult() {
-  const cardStack = document.getElementById("card-stack");
-
-  // Find the type with the highest score
-  let maxScore = -1;
-  let resultType = "";
-
-  for (const [type, score] of Object.entries(profileScores)) {
-    if (score > maxScore) {
-      maxScore = score;
-      resultType = type;
+    const cardStack = document.getElementById("card-stack");
+    const buttons = document.querySelector(".buttons");
+  
+    // Hide the buttons
+    buttons.classList.add("hide-buttons");
+  
+    // Disable swipe functionality
+    const hammer = new Hammer(cardStack);
+    hammer.off("swipeleft swiperight"); // Remove swipe event listeners
+  
+    // Find the type with the highest score
+    let maxScore = -1;
+    let resultType = "";
+  
+    for (const [type, score] of Object.entries(profileScores)) {
+      if (score > maxScore) {
+        maxScore = score;
+        resultType = type;
+      }
     }
+  
+    // Add emojis based on the type
+    const typeEmojis = {
+      "Fun-Loving Foodie": "🍕",
+      "The Over-Thinker": "🤔",
+      "The Hopeless Romantic": "💘",
+      "The Independent Adventurer": "🌍",
+      "The Let's See What Happens Type": "🎲",
+      "The Emotional Nurturer": "🌱",
+      "The All About the Little Things Lover": "✨",
+      "The Passionate Firecracker": "🔥",
+      "The Skeptical Realist": "🧐",
+      "The 'You Can Never Find Love' Type": "😅"
+    };
+  
+    const emoji = typeEmojis[resultType] || "";
+    cardStack.innerHTML = `<div class="card">Your romantic style is: ${resultType} ${emoji}</div>`;
   }
-
-  // Add emojis based on the type
-  const typeEmojis = {
-    "Fun-Loving Foodie": "🍕",
-    "The Over-Thinker": "🤔",
-    "The Hopeless Romantic": "💘",
-    "The Independent Adventurer": "🌍",
-    "The Let's See What Happens Type": "🎲",
-    "The Emotional Nurturer": "🌱",
-    "The All About the Little Things Lover": "✨",
-    "The Passionate Firecracker": "🔥",
-    "The Skeptical Realist": "🧐",
-    "The 'You Can Never Find Love' Type": "😅"
-  };
-
-  const emoji = typeEmojis[resultType] || "";
-  cardStack.innerHTML = `<div class="card">Your romantic style is: ${resultType} ${emoji}</div>`;
-}
 
 // Event listeners for buttons
 document.getElementById("red-flag").addEventListener("click", () => swipe(false));

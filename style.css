@@ -144,3 +144,6 @@ body {
       font-size: 14px; /* Adjust font size for buttons */
     }
   }
+  .hide-buttons {
+    display: none; /* Hide the buttons */
+  }

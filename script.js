@@ -310,74 +310,74 @@ function drag(e) {
 // Add emojis based on the type
 const resultDescriptions = {
     "Fun-Loving Foodie": {
-      emoji: "🍕",
-      description: "You’re a lover who lives for fun, laughter, and good food. You’ll whisk your partner away for spontaneous pizza dates, or cook up something quirky just to make them laugh. You believe romance is best served with a side of snacks.",
-      romanticTruth: "You enjoy the simple pleasures, but make sure you bring a little depth to your connections. It’s not all about the snacks; a little emotional investment goes a long way.",
-      likes: "Spontaneous dates, shared experiences, lighthearted humor.",
-      dislikes: "Overthinking, taking things too seriously."
+        emoji: "🍕",
+        description: "You’re a lover who lives for fun, laughter, and good food. You’ll whisk your partner away for spontaneous pizza dates, or cook up something quirky just to make them laugh. You believe romance is best served with a side of snacks.",
+        pairing: {
+            style: "The Hopeless Romantic"
+        }
     },
     "The Over-Thinker": {
-      emoji: "🤔",
-      description: "You tend to analyze every little detail of a relationship. Should you text them now, or wait? Are they “the one”? Your love life might feel like a strategic chess game, but it’s just your way of ensuring everything is perfect.",
-      romanticTruth: "Your attention to detail is admirable, but don’t let overthinking hold you back. Sometimes, love is about taking risks and embracing the unknown.",
-      likes: "Deep conversations, thoughtful gestures, planning.",
-      dislikes: "Uncertainty, lack of clarity."
+        emoji: "🤔",
+        description: "You tend to analyze every little detail of a relationship. Should you text them now, or wait? Are they “the one”? Your love life might feel like a strategic chess game, but it’s just your way of ensuring everything is perfect.",
+        pairing: {
+            style: "The Skeptical Realist"
+        }
     },
     "The Hopeless Romantic": {
-      emoji: "💘",
-      description: "You’re all about grand gestures, candlelit dinners, and endless affection. You see romance in everything and can’t help but pour your heart into every relationship. For you, love is the ultimate adventure.",
-      romanticTruth: "Your passion is beautiful, but make sure it’s matched with a solid foundation. Too much idealism can sometimes lead to unrealistic expectations.",
-      likes: "Romance, surprises, deep emotional connections.",
-      dislikes: "Emotional coldness, lack of passion."
+        emoji: "💘",
+        description: "You’re all about grand gestures, candlelit dinners, and endless affection. You see romance in everything and can’t help but pour your heart into every relationship. For you, love is the ultimate adventure.",
+        pairing: {
+            style: "The Fun-Loving Foodie"
+        }
     },
     "The Independent Adventurer": {
-      emoji: "🌍",
-      description: "You value your freedom, and your ideal relationship is one that respects boundaries. You love having your own space but can still make time for a partner when it’s right. You’re not looking for someone to complete you; you’re looking for someone who complements your life.",
-      romanticTruth: "You’re fiercely independent, but make sure your partner knows they’re important, too. A balance between personal space and togetherness will keep your relationships healthy.",
-      likes: "Freedom, personal growth, shared hobbies.",
-      dislikes: "Clinginess, suffocating relationships."
+        emoji: "🌍",
+        description: "You value your freedom, and your ideal relationship is one that respects boundaries. You love having your own space but can still make time for a partner when it’s right. You’re not looking for someone to complete you; you’re looking for someone who complements your life.",
+        pairing: {
+            style: "The Let's See What Happens Type"
+        }
     },
     "The Let's See What Happens Type": {
-      emoji: "🎲",
-      description: "You approach love like a fun experiment. You’re open to new experiences and relationships, but you don’t try to force anything. You believe in going with the flow and seeing where things take you.",
-      romanticTruth: "You’re relaxed about love, but just be careful not to let things drift too much. Sometimes relationships need a little direction, and that can come from you when the time is right.",
-      likes: "Spontaneity, new experiences, relaxed connections.",
-      dislikes: "Rigid expectations, pressure."
+        emoji: "🎲",
+        description: "You approach love like a fun experiment. You’re open to new experiences and relationships, but you don’t try to force anything. You believe in going with the flow and seeing where things take you.",
+        pairing: {
+            style: "The Independent Adventurer"
+        }
     },
     "The Emotional Nurturer": {
-      emoji: "🌱",
-      description: "You love making your partner feel special. From comforting hugs to personalized gifts, you’re always thinking about ways to show love. You thrive on taking care of your partner emotionally and creating a warm, safe space for them.",
-      romanticTruth: "You’re incredibly caring, but make sure you’re also looking after your own emotional needs. You can’t pour from an empty cup, so it’s important to balance giving and receiving love.",
-      likes: "Affection, deep emotional bonds, quality time.",
-      dislikes: "Coldness, neglect."
+        emoji: "🌱",
+        description: "You love making your partner feel special. From comforting hugs to personalized gifts, you’re always thinking about ways to show love. You thrive on taking care of your partner emotionally and creating a warm, safe space for them.",
+        pairing: {
+            style: "The All About the Little Things Lover"
+        }
     },
     "The All About the Little Things Lover": {
-      emoji: "✨",
-      description: "You thrive on the small, meaningful moments. A handwritten note, a quiet walk in the park, or making your partner their favorite drink—that’s what romance is about for you. You believe it’s the little things that make love last.",
-      romanticTruth: "While the small moments matter, don’t forget to keep the bigger picture in mind. It’s important to mix spontaneity with long-term intentions.",
-      likes: "Thoughtful gestures, quiet moments, sincerity.",
-      dislikes: "Drama, big displays of affection without meaning."
+        emoji: "✨",
+        description: "You thrive on the small, meaningful moments. A handwritten note, a quiet walk in the park, or making your partner their favorite drink—that’s what romance is about for you. You believe it’s the little things that make love last.",
+        pairing: {
+            style: "The Emotional Nurturer"
+        }
     },
     "The Passionate Firecracker": {
-      emoji: "🔥",
-      description: "You’re all in when it comes to romance. From wild adventures to intense emotions, you live for that deep connection and fiery passion. You want someone who can keep up with your high-energy love.",
-      romanticTruth: "Your intensity is magnetic, but sometimes you can burn bright and then burn out. Make sure you’re nurturing the relationship just as much as you’re living in the moment.",
-      likes: "Adventure, intense chemistry, excitement.",
-      dislikes: "Boredom, lack of passion."
+        emoji: "🔥",
+        description: "You’re all in when it comes to romance. From wild adventures to intense emotions, you live for that deep connection and fiery passion. You want someone who can keep up with your high-energy love.",
+        pairing: {
+            style: "The Hopeless Romantic"
+        }
     },
     "The Skeptical Realist": {
-      emoji: "🧐",
-      description: "You’re not one to believe in fairy tales. You prefer a relationship that’s grounded in reality and based on mutual respect and understanding. Love for you is about finding someone who gets you, flaws and all.",
-      romanticTruth: "You’re practical and down-to-earth, but sometimes your skepticism might make it hard for others to connect with you. Don’t let your guard stay up too high—sometimes love can surprise you.",
-      likes: "Honesty, clear communication, stability.",
-      dislikes: "Unrealistic expectations, mind games."
+        emoji: "🧐",
+        description: "You’re not one to believe in fairy tales. You prefer a relationship that’s grounded in reality and based on mutual respect and understanding. Love for you is about finding someone who gets you, flaws and all.",
+        pairing: {
+            style: "The 'You Can Never Find Love' Type"
+        }
     },
     "The 'You Can Never Find Love' Type": {
-      emoji: "😅",
-      description: "You’re a bit of a lone wolf. You’re not really looking for anything serious, and sometimes it feels like you’re just waiting for the perfect person to come along—but that might never happen if you’re too picky or closed off.",
-      romanticTruth: "You’ve probably been hurt in the past, and it’s affecting how you approach love. It’s okay to take your time, but don’t shut yourself off from opportunities for connection. Sometimes, you have to let love find you.",
-      likes: "Independence, freedom, no strings attached.",
-      dislikes: "Vulnerability, commitments, too much emotional involvement."
+        emoji: "😅",
+        description: "You’re a bit of a lone wolf. You’re not really looking for anything serious, and sometimes it feels like you’re just waiting for the perfect person to come along—but that might never happen if you’re too picky or closed off.",
+        pairing: {
+            style: "The Skeptical Realist"
+        }
     }
   };
 
@@ -406,11 +406,14 @@ const resultDescriptions = {
     // Get the result details
     const result = resultDescriptions[resultType];
 
-    // Display the result with only the romantic style and description
+    // Display the result with romantic style, description, and pairing information
     cardStack.innerHTML = `
         <div class="card">
             <h2>Your romantic style is: ${resultType} ${result.emoji}</h2>
             <p>${result.description}</p>
+            <div class="pairing-info">
+                <h3>You will pair well with a ${result.pairing.style}</h3>
+            </div>
         </div>
     `;
 }

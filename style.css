@@ -163,3 +163,16 @@ body {
   .card strong {
     font-weight: bold;
   }
+  .pairing-info {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    width: 90%;
+    text-align: center;
+}
+
+.pairing-info h3 {
+    font-size: 18px;
+    margin: 0;
+}

@@ -68,6 +68,7 @@ body {
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
+    flex-direction: column; /* Stack content vertically */
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -79,6 +80,7 @@ body {
     opacity: 1;
     padding: 20px;
     box-sizing: border-box;
+    
   }
   
   /* Stacked Card Effect */
@@ -130,7 +132,7 @@ body {
   
     .card {
       font-size: 14px; /* Reduce font size for better readability */
-      padding: 15px; /* Adjust padding for smaller cards */
+      padding: 30px; /* Adjust padding for smaller cards */
     }
   
     .buttons {
@@ -146,4 +148,18 @@ body {
   }
   .hide-buttons {
     display: none; /* Hide the buttons */
+  }
+  .card h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .card p {
+    font-size: 12px;
+    margin: 10px 0;
+    line-height: 1.5;
+  }
+  
+  .card strong {
+    font-weight: bold;
   }

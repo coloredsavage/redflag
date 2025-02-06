@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,15 +7,21 @@
   <title>Red Flag, Green Flag</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
   <div class="container">
     <div id="card-stack">
       <!-- Cards will be dynamically added here -->
     </div>
-    <div class="buttons">
-      <button id="red-flag">🚩 Red Flag</button>
-      <button id="green-flag">💚 Green Flag</button>
+    <div class="flag-buttons">
+      <button id="red-flag" class="flag-button red" aria-label="Red Flag">
+        <i class="fas fa-times"></i>
+      </button>
+      <button id="green-flag" class="flag-button green" aria-label="Green Flag">
+        <i class="fas fa-check"></i>
+      </button>
+      
     </div>
   </div>
   <script src="script.js"></script>

@@ -383,7 +383,7 @@ const resultDescriptions = {
 
   function showResult() {
     const cardStack = document.getElementById("card-stack");
-    const buttons = document.querySelector(".buttons");
+    const buttons = document.querySelector(".flag-buttons");
 
     // Hide the buttons
     buttons.classList.add("hide-buttons");

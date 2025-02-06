@@ -291,21 +291,96 @@ function drag(e) {
 
   const card = e.target;
 
-  // Calculate new horizontal position (only offsetX)
+  // Calculate new horizontal position
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   offsetX = clientX - startX;
 
-  // Apply drag threshold (don't move until it exceeds threshold)
+  // Apply drag threshold
   if (Math.abs(offsetX) < dragThreshold) {
-    offsetX = 0; // Don't move the card until the threshold is reached
+    offsetX = 0;
+    // Remove both shadow classes when not dragging far enough
+    card.classList.remove('swipe-shadow-left', 'swipe-shadow-right');
+  } else {
+    // Add appropriate shadow class based on drag direction
+    if (offsetX < 0) {
+      card.classList.add('swipe-shadow-left');
+      card.classList.remove('swipe-shadow-right');
+    } else {
+      card.classList.add('swipe-shadow-right');
+      card.classList.remove('swipe-shadow-left');
+    }
   }
 
   // Limit how far the card can be dragged horizontally
-  const maxDrag = 250; // Maximum drag distance in pixels
-  offsetX = Math.max(-maxDrag, Math.min(offsetX, maxDrag)); // Clamp offsetX between -maxDrag and maxDrag
+  const maxDrag = 250;
+  offsetX = Math.max(-maxDrag, Math.min(offsetX, maxDrag));
 
-  // Apply the drag effect (no vertical movement)
+  // Apply the drag effect
   card.style.transform = `translate(${offsetX}px, 0) rotate(${offsetX / 10}deg)`;
+}
+
+// Update the swipe function to maintain the shadow during the swipe animation
+function swipe(isGreenFlag) {
+  if (currentProfileIndex >= MAX_SWIPES) return;
+
+  const cardStack = document.getElementById("card-stack");
+  const card = cardStack.querySelector(".card");
+
+  if (card) {
+    const currentProfile = card.textContent;
+
+    if (isGreenFlag && profileScoring[currentProfile]) {
+      for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
+        profileScores[type] += points;
+      }
+    }
+
+    // Add both the swipe and shadow classes
+    if (isGreenFlag) {
+      card.classList.add("swipe-right", "swipe-shadow-right");
+      card.classList.remove("swipe-shadow-left");
+    } else {
+      card.classList.add("swipe-left", "swipe-shadow-left");
+      card.classList.remove("swipe-shadow-right");
+    }
+
+    card.addEventListener("transitionend", () => {
+      card.remove();
+      setTimeout(() => {
+        currentProfileIndex++;
+        if (currentProfileIndex < MAX_SWIPES) {
+          nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
+          showProfile();
+        } else {
+          showResult();
+        }
+      }, 300);
+    }, { once: true });
+  }
+}
+
+// Update endDrag to handle shadow cleanup
+function endDrag(e) {
+  if (!isDragging) return;
+
+  const card = e.target;
+  card.classList.remove("dragging");
+
+  offsetX = e.touches ? e.changedTouches[0].clientX - startX : e.clientX - startX;
+
+  if (Math.abs(offsetX) > 100) {
+    if (offsetX > 0) {
+      swipe(true);
+    } else {
+      swipe(false);
+    }
+  } else {
+    // Reset card position and remove shadow classes
+    card.style.transform = "translate(0, 0) rotate(0)";
+    card.classList.remove('swipe-shadow-left', 'swipe-shadow-right');
+  }
+
+  isDragging = false;
 }
 // Add emojis based on the type
 const resultDescriptions = {

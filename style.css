@@ -35,12 +35,23 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s ease;
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), 
+              opacity 0.3s ease,
+              box-shadow 0.3s ease;
   user-select: none;
   cursor: grab;
   opacity: 1;
   padding: 20px;
   box-sizing: border-box;
+}
+
+/* Add new classes for the shadow effects */
+.card.swipe-shadow-left {
+  box-shadow: inset 0 -10px 20px -10px rgba(255, 77, 77, 0.5);
+}
+
+.card.swipe-shadow-right {
+  box-shadow: inset 0 -10px 20px -10px rgba(76, 175, 80, 0.5);
 }
 
 .card:nth-child(1) {

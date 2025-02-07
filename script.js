@@ -276,8 +276,9 @@ function showProfile() {
   }
 }
 
+// script.js
 function swipe(isGreenFlag) {
-  if (currentProfileIndex >= MAX_SWIPES) return; // Prevent swiping after results
+  if (currentProfileIndex >= MAX_SWIPES) return;
 
   const cardStack = document.getElementById("card-stack");
   const card = cardStack.querySelector(".card");
@@ -285,7 +286,6 @@ function swipe(isGreenFlag) {
   if (card) {
     const currentProfile = card.textContent;
 
-    // Only add scores for green flags (positive responses)
     if (isGreenFlag && profileScoring[currentProfile]) {
       for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
         profileScores[type] += points;
@@ -303,14 +303,19 @@ function swipe(isGreenFlag) {
       currentProfileIndex++;
 
       if (currentProfileIndex < MAX_SWIPES) {
-        nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 3); // Load next 3 profiles
+        nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
         showProfile();
       } else {
-        // Show a brief loader before displaying results
-        cardStack.innerHTML = `<div class="loader">Collating your results...</div>`;
+        // Show the loader before showing results
+        const loader = document.getElementById("loader");
+        loader.style.display = "block"; // Show the loader
+        cardStack.innerHTML = ""; // Clear the card stack
+
+        // Delay the results display by 1.5 seconds
         setTimeout(() => {
-          showResult();
-        }, 500); // 500ms delay before showing results
+          loader.style.display = "none"; // Hide the loader
+          showResult(); // Show the results
+        }, 3500); // 1.5 seconds delay
       }
     }, { once: true });
   }
@@ -365,6 +370,8 @@ function endDrag(e) {
 }
 
 // Drag the card horizontally only
+// script.js
+// script.js
 function drag(e) {
   if (!isDragging) return;
 
@@ -374,20 +381,36 @@ function drag(e) {
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   offsetX = clientX - startX;
 
-  // Apply drag threshold
-  if (Math.abs(offsetX) < dragThreshold) {
-    offsetX = 0;
-    // Remove both shadow classes when not dragging far enough
-    card.classList.remove('swipe-shadow-left', 'swipe-shadow-right');
-  } else {
-    // Add appropriate shadow class based on drag direction
-    if (offsetX < 0) {
-      card.classList.add('swipe-shadow-left');
-      card.classList.remove('swipe-shadow-right');
-    } else {
-      card.classList.add('swipe-shadow-right');
-      card.classList.remove('swipe-shadow-left');
+  // Add swipe feedback icons and inner shadow
+  if (offsetX < -50) {
+    // Swiping left: show X icon and left inner shadow
+    if (!card.querySelector(".swipe-icon.left")) {
+      card.innerHTML += `<div class="swipe-icon left"><i class="fas fa-times"></i></div>`;
     }
+    if (card.querySelector(".swipe-icon.right")) {
+      card.querySelector(".swipe-icon.right").remove();
+    }
+    card.classList.add("swiping-left"); // Add left inner shadow
+    card.classList.remove("swiping-right"); // Remove right inner shadow
+  } else if (offsetX > 50) {
+    // Swiping right: show ✓ icon and right inner shadow
+    if (!card.querySelector(".swipe-icon.right")) {
+      card.innerHTML += `<div class="swipe-icon right"><i class="fas fa-check"></i></div>`;
+    }
+    if (card.querySelector(".swipe-icon.left")) {
+      card.querySelector(".swipe-icon.left").remove();
+    }
+    card.classList.add("swiping-right"); // Add right inner shadow
+    card.classList.remove("swiping-left"); // Remove left inner shadow
+  } else {
+    // Reset: remove icons and inner shadows if not swiping far enough
+    if (card.querySelector(".swipe-icon.left")) {
+      card.querySelector(".swipe-icon.left").remove();
+    }
+    if (card.querySelector(".swipe-icon.right")) {
+      card.querySelector(".swipe-icon.right").remove();
+    }
+    card.classList.remove("swiping-left", "swiping-right"); // Remove both inner shadows
   }
 
   // Limit how far the card can be dragged horizontally
@@ -398,7 +421,33 @@ function drag(e) {
   card.style.transform = `translate(${offsetX}px, 0) rotate(${offsetX / 10}deg)`;
 }
 
+function endDrag(e) {
+  if (!isDragging) return;
+
+  const card = e.target;
+  card.classList.remove("dragging");
+
+  // Remove inner shadows when dragging ends
+  card.classList.remove("swiping-left", "swiping-right");
+
+  offsetX = e.touches ? e.changedTouches[0].clientX - startX : e.clientX - startX;
+
+  if (Math.abs(offsetX) > 100) {
+    if (offsetX > 0) {
+      swipe(true); // Green flag
+    } else {
+      swipe(false); // Red flag
+    }
+  } else {
+    // Reset card position
+    card.style.transform = "translate(0, 0) rotate(0)";
+  }
+
+  isDragging = false;
+}
+
 // Update the swipe function to maintain the shadow during the swipe animation
+// script.js
 function swipe(isGreenFlag) {
   if (currentProfileIndex >= MAX_SWIPES) return;
 
@@ -422,6 +471,15 @@ function swipe(isGreenFlag) {
       card.classList.add("swipe-left", "swipe-shadow-left");
       card.classList.remove("swipe-shadow-right");
     }
+
+    // Remove the swipe icon and inner shadows after the swipe animation
+    if (card.querySelector(".swipe-icon.left")) {
+      card.querySelector(".swipe-icon.left").remove();
+    }
+    if (card.querySelector(".swipe-icon.right")) {
+      card.querySelector(".swipe-icon.right").remove();
+    }
+    card.classList.remove("swiping-left", "swiping-right"); // Remove inner shadows
 
     card.addEventListener("transitionend", () => {
       card.remove();

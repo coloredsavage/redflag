@@ -158,6 +158,80 @@ const dragThreshold = 60;
 let nextProfiles = [];
 const MAX_SWIPES = 10;
 
+const quirkEmojis = {
+  "Thinks the moon landing was staged… but in a cool way.": "🌕", // Moon emoji
+  "Doesn’t trust people who don’t like dogs.": "🐶", // Dog emoji
+  "Owns way too many novelty mugs.": "☕", // Coffee mug emoji
+  "Can’t stop quoting Mean Girls.": "👯", // Dancing women emoji
+  "Thinks they’d be great on Survivor.": "🏝️", // Desert island emoji
+  "Hates when people clap after a plane lands.": "✈️", // Airplane emoji
+  "Owns a fanny pack, and actually uses it.": "👝", // Clutch bag emoji
+  "Uses ‘Yeet’ in every conversation.": "💨", // Dashing away emoji
+  "Can’t resist taking a nap wherever they are.": "😴", // Sleeping face emoji
+  "Believes that TikTok is a form of art.": "🎨", // Artist palette emoji
+  "Has never seen Titanic… but still quotes it.": "🚢", // Ship emoji
+  "Has a secret collection of rubber ducks.": "🦆", // Duck emoji
+  "Can quote every line from The Office.": "📺", // Television emoji
+  "Believes their spirit animal is a sloth.": "🦥", // Sloth emoji
+  "Refers to themselves as “vibing.”": "🎶", // Musical notes emoji
+  "Wears sunglasses at night.": "🕶️", // Sunglasses emoji
+  "Can’t walk past a vending machine without buying something.": "🍫", // Chocolate bar emoji
+  "Holds grudges over minor inconveniences, like when someone cuts in line.": "😠", // Angry face emoji
+  "Never knows what day it is but still manages to show up on time.": "📅", // Calendar emoji
+  "Thinks every song is better if you add a tambourine.": "🎶", // Musical notes emoji
+  "Owns an excessive number of graphic T-shirts.": "👕", // T-shirt emoji
+  "Always makes awkward small talk with cashiers.": "💬", // Speech balloon emoji
+  "Will fight you on whether or not pineapple belongs on pizza.": "🍍", // Pineapple emoji
+  "Can’t pronounce foreign food names correctly, but does it anyway.": "🍜", // Steaming bowl emoji
+  "Refuses to use a normal-sized toothbrush, only the giant ones.": "🪥", // Toothbrush emoji
+  "Constantly wears a hoodie, even in 90-degree weather.": "🧥", // Coat emoji
+  "Has an irrational fear of escalators.": "🪜", // Ladder emoji
+  "Believes that taking a nap makes them a wizard.": "🧙", // Wizard emoji
+  "Knows all the lyrics to Barbie Girl.": "🎤", // Microphone emoji
+  "Uses “I’m not a morning person” as an excuse for everything.": "🌅", // Sunrise emoji
+  "Is obsessed with watching home renovation shows but doesn’t own a toolbox.": "🛠️", // Hammer and wrench emoji
+  "Always orders the same thing at a restaurant, no exceptions.": "🍽️", // Fork and knife emoji
+  "Collects empty bottles just for the aesthetic.": "🍾", // Bottle with popping cork emoji
+  "Thinks the moon controls their mood.": "🌙", // Crescent moon emoji
+  "Can’t resist buying things they don’t need during a Target run.": "🛒", // Shopping cart emoji
+  "Hides snacks around the house for later.": "🍪", // Cookie emoji
+  "Constantly claims they could’ve been a professional athlete.": "🏅", // Medal emoji
+  "Writes in all caps like they’re shouting.": "🔊", // Loudspeaker emoji
+  "Has a conspiracy theory about the Bermuda Triangle.": "🔺", // Red triangle emoji
+  "Talks to their plants like they’re friends.": "🌿", // Herb emoji
+  "Thinks cold pizza is a delicacy.": "🍕", // Pizza emoji
+  "Has a secret stash of candy that they won’t share.": "🍬", // Candy emoji
+  "Prefers to make up their own rules to board games.": "🎲", // Game die emoji
+  "Has a “life hack” for everything.": "🛠️", // Hammer and wrench emoji
+  "Wears band T-shirts but can’t name three songs by the band.": "🎸", // Guitar emoji
+  "Claims to be “super into yoga” but only does it once a year.": "🧘", // Person in lotus position emoji
+  "Can’t decide between being a dog person or a cat person.": "🐱", // Cat emoji
+  "Has an irrational love for 90s sitcoms.": "📺", // Television emoji
+  "Refers to themselves as “unique” when they’re just a little quirky.": "🦄", // Unicorn emoji
+  "Doesn’t use the ‘just add water’ instructions for instant noodles.": "🍜", // Steaming bowl emoji
+  "Is constantly trying to start a podcast, but never follows through.": "🎙️", // Studio microphone emoji
+  "Believes they would make an excellent spy, despite being terrible at keeping secrets.": "🕵️", // Detective emoji
+  "Still watches cartoons, no shame.": "📺", // Television emoji
+  "Finds it impossible to say ‘no’ to a sale.": "🛍️", // Shopping bags emoji
+  "Lives for the drama in reality TV.": "📺", // Television emoji
+  "Has an extensive collection of cat memes.": "🐱", // Cat emoji
+  "Can’t stop talking about their favorite conspiracy theory at parties.": "🕵️", // Detective emoji
+  "Sleeps with a stuffed animal.": "🧸", // Teddy bear emoji
+  "Is obsessed with finding the perfect Instagram filter.": "📸", // Camera emoji
+  "Unironically loves ASMR videos.": "🎧", // Headphone emoji
+  "Spends hours organizing their playlists, but never listens to them.": "🎶", // Musical notes emoji
+  "Takes random polls about silly things.": "📊", // Chart increasing emoji
+  "Always ends up in awkward situations with their ex.": "😬", // Grimacing face emoji
+  "Thinks they could survive in the wild without any survival skills.": "🌲", // Evergreen tree emoji
+  "Is convinced they were a superhero in a past life.": "🦸", // Superhero emoji
+  "Loves to text in emoji code.": "📱", // Mobile phone emoji
+  "Is always late but blames traffic even if it’s 2 AM.": "🚗", // Car emoji
+  "Pretends to know how to cook but always orders takeout.": "🍳", // Cooking emoji
+  "Can’t resist picking up every stray animal they see.": "🐾", // Paw prints emoji
+  "Can’t function without caffeine, but only drinks it with sugar.": "☕", // Coffee mug emoji
+  "Makes up stories about their “wild adventures” just to sound interesting.": "🗺️", // World map emoji
+  "Obsessed with collecting useless trivia.": "📚" // Books emoji
+};
 // Function to shuffle an array
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -173,7 +247,11 @@ nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
 function createCard(text) {
   const card = document.createElement("div");
   card.classList.add("card");
-  card.textContent = text;
+
+  // Add the emoji and text to the card
+  const emoji = quirkEmojis[text] || "❓"; // Default to a question mark if no emoji is found
+  card.innerHTML = `<span class="emoji">${emoji}</span> ${text}`;
+
   return card;
 }
 
@@ -182,12 +260,10 @@ function showProfile() {
   cardStack.innerHTML = "";
 
   if (currentProfileIndex < Math.min(profiles.length, MAX_SWIPES)) {
-    const currentText = nextProfiles[0];
-    const nextText = nextProfiles[1] || profiles[currentProfileIndex + 1];
+    const cardsToShow = Math.min(3, MAX_SWIPES - currentProfileIndex); // Show fewer cards as we approach the end
 
-    // Add up to 2 cards to the stack
-    for (let i = 0; i < 2; i++) {
-      const card = createCard(i === 0 ? currentText : nextText);
+    for (let i = 0; i < cardsToShow; i++) {
+      const card = createCard(nextProfiles[i]);
       cardStack.appendChild(card);
     }
 
@@ -201,40 +277,43 @@ function showProfile() {
 }
 
 function swipe(isGreenFlag) {
-    if (currentProfileIndex >= MAX_SWIPES) return; // Prevent swiping after results
-  
-    const cardStack = document.getElementById("card-stack");
-    const card = cardStack.querySelector(".card");
-  
-    if (card) {
-      const currentProfile = card.textContent;
-  
-      // Only add scores for green flags (positive responses)
-      if (isGreenFlag && profileScoring[currentProfile]) {
-        for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
-          profileScores[type] += points;
-        }
+  if (currentProfileIndex >= MAX_SWIPES) return; // Prevent swiping after results
+
+  const cardStack = document.getElementById("card-stack");
+  const card = cardStack.querySelector(".card");
+
+  if (card) {
+    const currentProfile = card.textContent;
+
+    // Only add scores for green flags (positive responses)
+    if (isGreenFlag && profileScoring[currentProfile]) {
+      for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
+        profileScores[type] += points;
       }
-  
-      if (isGreenFlag) {
-        card.classList.add("swipe-right");
-      } else {
-        card.classList.add("swipe-left");
-      }
-  
-      card.addEventListener("transitionend", () => {
-        card.remove();
-        setTimeout(() => {
-          currentProfileIndex++;
-          if (currentProfileIndex < MAX_SWIPES) {
-            nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
-            showProfile();
-          } else {
-            showResult();
-          }
-        }, 300);
-      }, { once: true });
     }
+
+    if (isGreenFlag) {
+      card.classList.add("swipe-right");
+    } else {
+      card.classList.add("swipe-left");
+    }
+
+    card.addEventListener("transitionend", () => {
+      card.remove();
+      currentProfileIndex++;
+
+      if (currentProfileIndex < MAX_SWIPES) {
+        nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 3); // Load next 3 profiles
+        showProfile();
+      } else {
+        // Show a brief loader before displaying results
+        cardStack.innerHTML = `<div class="loader">Collating your results...</div>`;
+        setTimeout(() => {
+          showResult();
+        }, 500); // 500ms delay before showing results
+      }
+    }, { once: true });
+  }
 }
 
 // Function to make a card draggable
@@ -492,6 +571,7 @@ const resultDescriptions = {
         </div>
     `;
 }
+
 
 // Event listeners for the red and green flag buttons
 document.getElementById("red-flag").addEventListener("click", () => swipe(false));

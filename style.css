@@ -204,13 +204,21 @@ body {
 
   #card-stack,
   .card {
-    width: 250px;
-    height: 350px;
+    width: 300px; /* Increased from 250px */
+    height: 450px; /* Increased from 350px */
   }
 
   .card {
-    font-size: 14px;
+    font-size: 18px; /* Increased from 14px */
     padding: 30px;
+  }
+
+  .card h2 {
+    font-size: 20px; /* Increased from 20px */
+  }
+
+  .card p {
+    font-size: 16px; /* Increased from 14px */
   }
 
   .flag-buttons {
@@ -218,9 +226,17 @@ body {
   }
 
   .flag-button {
-    width: 56px;
-    height: 56px;
-    font-size: 24px;
+    width: 64px; /* Increased from 56px */
+    height: 64px; /* Increased from 56px */
+    font-size: 28px; /* Increased from 24px */
+  }
+
+  .pairing-info h3 {
+    font-size: 20px; /* Increased from 18px */
+  }
+
+  .card .emoji {
+    font-size: 40px; /* Increased from 32px */
   }
 }
 

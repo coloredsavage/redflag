@@ -277,6 +277,14 @@ function showProfile() {
 }
 
 // script.js
+function initializeSwipe() {
+  const cardStack = document.getElementById("card-stack");
+  const hammer = new Hammer(cardStack);
+
+  hammer.on("swipeleft", () => swipe(false)); // Swipe left for red flag
+  hammer.on("swiperight", () => swipe(true)); // Swipe right for green flag
+}
+
 function swipe(isGreenFlag) {
   if (currentProfileIndex >= MAX_SWIPES) return;
 
@@ -286,39 +294,89 @@ function swipe(isGreenFlag) {
   if (card) {
     const currentProfile = card.textContent;
 
+    // Add swipe feedback (inner shadow and circular button) for button clicks
+    if (isGreenFlag) {
+      card.classList.add("swiping-right"); // Add right inner shadow
+      card.innerHTML += `<div class="swipe-icon right"><i class="fas fa-check"></i></div>`; // Add ✓ icon
+    } else {
+      card.classList.add("swiping-left"); // Add left inner shadow
+      card.innerHTML += `<div class="swipe-icon left"><i class="fas fa-times"></i></div>`; // Add X icon
+    }
+
+    // Add points for green flag swipes
     if (isGreenFlag && profileScoring[currentProfile]) {
       for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
         profileScores[type] += points;
       }
     }
 
+    // Add both the swipe and shadow classes
     if (isGreenFlag) {
-      card.classList.add("swipe-right");
+      card.classList.add("swipe-right", "swipe-shadow-right");
+      card.classList.remove("swipe-shadow-left");
     } else {
-      card.classList.add("swipe-left");
+      card.classList.add("swipe-left", "swipe-shadow-left");
+      card.classList.remove("swipe-shadow-right");
     }
 
+    // Remove the swipe icon and inner shadows after the swipe animation
     card.addEventListener("transitionend", () => {
+      if (card.querySelector(".swipe-icon.left")) {
+        card.querySelector(".swipe-icon.left").remove();
+      }
+      if (card.querySelector(".swipe-icon.right")) {
+        card.querySelector(".swipe-icon.right").remove();
+      }
+      card.classList.remove("swiping-left", "swiping-right"); // Remove inner shadows
       card.remove();
-      currentProfileIndex++;
 
-      if (currentProfileIndex < MAX_SWIPES) {
-        nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
-        showProfile();
-      } else {
-        // Show the loader before showing results
+      // Check if this is the final swipe
+      if (currentProfileIndex + 1 >= MAX_SWIPES) {
+        // Show the Lottie loader
         const loader = document.getElementById("loader");
-        loader.style.display = "block"; // Show the loader
+        loader.style.display = "block"; // Make the loader visible
         cardStack.innerHTML = ""; // Clear the card stack
 
-        // Delay the results display by 1.5 seconds
+        // Delay the results display by 3 seconds (adjust as needed)
         setTimeout(() => {
           loader.style.display = "none"; // Hide the loader
           showResult(); // Show the results
-        }, 3500); // 1.5 seconds delay
+        }, 3000); // 3 seconds delay
+      } else {
+        currentProfileIndex++;
+        nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
+        showProfile();
       }
     }, { once: true });
   }
+}
+
+// Initialize Hammer.js for swipe gestures
+initializeSwipe();
+
+// Reinitialize Hammer.js after showing the loader
+function showProfile() {
+  const cardStack = document.getElementById("card-stack");
+  cardStack.innerHTML = "";
+
+  if (currentProfileIndex < Math.min(profiles.length, MAX_SWIPES)) {
+    const cardsToShow = Math.min(3, MAX_SWIPES - currentProfileIndex); // Show fewer cards as we approach the end
+
+    for (let i = 0; i < cardsToShow; i++) {
+      const card = createCard(nextProfiles[i]);
+      cardStack.appendChild(card);
+    }
+
+    const topCard = cardStack.querySelector(".card");
+    if (topCard) {
+      makeDraggable(topCard);
+    }
+  } else {
+    showResult();
+  }
+
+  // Reinitialize Hammer.js after updating the card stack
+  initializeSwipe();
 }
 
 // Function to make a card draggable

@@ -370,7 +370,6 @@ function endDrag(e) {
 }
 
 // Drag the card horizontally only
-// script.js
 function drag(e) {
   if (!isDragging) return;
 
@@ -379,12 +378,12 @@ function drag(e) {
   // Calculate new horizontal position
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   offsetX = clientX - startX;
-
+  
   // Add swipe feedback icons
   if (offsetX < -50) {
     // Swiping left: show X icon
     if (!card.querySelector(".swipe-icon.left")) {
-      card.innerHTML += `<div class="swipe-icon left"><i class="fas fa-times"></i></div>`;
+      card.innerHTML += `<i class="fas fa-times swipe-icon left"></i>`;
     }
     if (card.querySelector(".swipe-icon.right")) {
       card.querySelector(".swipe-icon.right").remove();
@@ -392,7 +391,7 @@ function drag(e) {
   } else if (offsetX > 50) {
     // Swiping right: show ✓ icon
     if (!card.querySelector(".swipe-icon.right")) {
-      card.innerHTML += `<div class="swipe-icon right"><i class="fas fa-check"></i></div>`;
+      card.innerHTML += `<i class="fas fa-check swipe-icon right"></i>`;
     }
     if (card.querySelector(".swipe-icon.left")) {
       card.querySelector(".swipe-icon.left").remove();
@@ -407,6 +406,22 @@ function drag(e) {
     }
   }
 
+  // Apply drag threshold
+  if (Math.abs(offsetX) < dragThreshold) {
+    offsetX = 0;
+    // Remove both shadow classes when not dragging far enough
+    card.classList.remove('swipe-shadow-left', 'swipe-shadow-right');
+  } else {
+    // Add appropriate shadow class based on drag direction
+    if (offsetX < 0) {
+      card.classList.add('swipe-shadow-left');
+      card.classList.remove('swipe-shadow-right');
+    } else {
+      card.classList.add('swipe-shadow-right');
+      card.classList.remove('swipe-shadow-left');
+    }
+  }
+
   // Limit how far the card can be dragged horizontally
   const maxDrag = 250;
   offsetX = Math.max(-maxDrag, Math.min(offsetX, maxDrag));
@@ -416,7 +431,7 @@ function drag(e) {
 }
 
 // Update the swipe function to maintain the shadow during the swipe animation
-
+// script.js
 function swipe(isGreenFlag) {
   if (currentProfileIndex >= MAX_SWIPES) return;
 
@@ -426,6 +441,16 @@ function swipe(isGreenFlag) {
   if (card) {
     const currentProfile = card.textContent;
 
+    // Add swipe feedback (inner shadow and circular button) for button clicks
+    if (isGreenFlag) {
+      card.classList.add("swiping-right"); // Add right inner shadow
+      card.innerHTML += `<div class="swipe-icon right"><i class="fas fa-check"></i></div>`; // Add ✓ icon
+    } else {
+      card.classList.add("swiping-left"); // Add left inner shadow
+      card.innerHTML += `<div class="swipe-icon left"><i class="fas fa-times"></i></div>`; // Add X icon
+    }
+
+    // Add points for green flag swipes
     if (isGreenFlag && profileScoring[currentProfile]) {
       for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
         profileScores[type] += points;
@@ -441,25 +466,34 @@ function swipe(isGreenFlag) {
       card.classList.remove("swipe-shadow-right");
     }
 
-    // Remove the swipe icon after the swipe animation
-    if (card.querySelector(".swipe-icon.left")) {
-      card.querySelector(".swipe-icon.left").remove();
-    }
-    if (card.querySelector(".swipe-icon.right")) {
-      card.querySelector(".swipe-icon.right").remove();
-    }
-
+    // Remove the swipe icon and inner shadows after the swipe animation
     card.addEventListener("transitionend", () => {
+      if (card.querySelector(".swipe-icon.left")) {
+        card.querySelector(".swipe-icon.left").remove();
+      }
+      if (card.querySelector(".swipe-icon.right")) {
+        card.querySelector(".swipe-icon.right").remove();
+      }
+      card.classList.remove("swiping-left", "swiping-right"); // Remove inner shadows
       card.remove();
-      setTimeout(() => {
+
+      // Check if this is the final swipe
+      if (currentProfileIndex + 1 >= MAX_SWIPES) {
+        // Show the loader
+        const loader = document.getElementById("loader");
+        loader.style.display = "block"; // Make the loader visible
+        cardStack.innerHTML = ""; // Clear the card stack
+
+        // Delay the results display by 1.5 seconds
+        setTimeout(() => {
+          loader.style.display = "none"; // Hide the loader
+          showResult(); // Show the results
+        }, 1500); // 1.5 seconds delay
+      } else {
         currentProfileIndex++;
-        if (currentProfileIndex < MAX_SWIPES) {
-          nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
-          showProfile();
-        } else {
-          showResult();
-        }
-      }, 300);
+        nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
+        showProfile();
+      }
     }, { once: true });
   }
 }

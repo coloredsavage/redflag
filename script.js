@@ -448,6 +448,9 @@ function endDrag(e) {
 
 // Update the swipe function to maintain the shadow during the swipe animation
 // script.js
+// script.js
+// script.js
+// script.js
 function swipe(isGreenFlag) {
   if (currentProfileIndex >= MAX_SWIPES) return;
 
@@ -457,6 +460,16 @@ function swipe(isGreenFlag) {
   if (card) {
     const currentProfile = card.textContent;
 
+    // Add swipe feedback (inner shadow and circular button) for button clicks
+    if (isGreenFlag) {
+      card.classList.add("swiping-right"); // Add right inner shadow
+      card.innerHTML += `<div class="swipe-icon right"><i class="fas fa-check"></i></div>`; // Add ✓ icon
+    } else {
+      card.classList.add("swiping-left"); // Add left inner shadow
+      card.innerHTML += `<div class="swipe-icon left"><i class="fas fa-times"></i></div>`; // Add X icon
+    }
+
+    // Add points for green flag swipes
     if (isGreenFlag && profileScoring[currentProfile]) {
       for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
         profileScores[type] += points;
@@ -473,25 +486,33 @@ function swipe(isGreenFlag) {
     }
 
     // Remove the swipe icon and inner shadows after the swipe animation
-    if (card.querySelector(".swipe-icon.left")) {
-      card.querySelector(".swipe-icon.left").remove();
-    }
-    if (card.querySelector(".swipe-icon.right")) {
-      card.querySelector(".swipe-icon.right").remove();
-    }
-    card.classList.remove("swiping-left", "swiping-right"); // Remove inner shadows
-
     card.addEventListener("transitionend", () => {
+      if (card.querySelector(".swipe-icon.left")) {
+        card.querySelector(".swipe-icon.left").remove();
+      }
+      if (card.querySelector(".swipe-icon.right")) {
+        card.querySelector(".swipe-icon.right").remove();
+      }
+      card.classList.remove("swiping-left", "swiping-right"); // Remove inner shadows
       card.remove();
-      setTimeout(() => {
+
+      // Check if this is the final swipe
+      if (currentProfileIndex + 1 >= MAX_SWIPES) {
+        // Show the Lottie loader
+        const loader = document.getElementById("loader");
+        loader.style.display = "block"; // Make the loader visible
+        cardStack.innerHTML = ""; // Clear the card stack
+
+        // Delay the results display by 3 seconds (adjust as needed)
+        setTimeout(() => {
+          loader.style.display = "none"; // Hide the loader
+          showResult(); // Show the results
+        }, 3000); // 3 seconds delay
+      } else {
         currentProfileIndex++;
-        if (currentProfileIndex < MAX_SWIPES) {
-          nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
-          showProfile();
-        } else {
-          showResult();
-        }
-      }, 300);
+        nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
+        showProfile();
+      }
     }, { once: true });
   }
 }
@@ -631,9 +652,14 @@ const resultDescriptions = {
 }
 
 
-// Event listeners for the red and green flag buttons
-document.getElementById("red-flag").addEventListener("click", () => swipe(false));
-document.getElementById("green-flag").addEventListener("click", () => swipe(true));
+// script.js
+document.getElementById("red-flag").addEventListener("click", () => {
+  swipe(false); // Trigger swipe with red flag feedback
+});
+
+document.getElementById("green-flag").addEventListener("click", () => {
+  swipe(true); // Trigger swipe with green flag feedback
+});
 
 // Ensure that the showProfile function is defined and correctly displays the profile
 showProfile();

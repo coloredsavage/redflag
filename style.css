@@ -240,15 +240,21 @@ body {
 }
 
 /* style.css */
+/* style.css */
+/* style.css */
 .loader {
-  font-size: 20px;
-  font-weight: 600;
-  color: #333;
-  text-align: center;
-  margin-top: 50%;
-  transform: translateY(-50%);
-  animation: fadeIn 0.5s ease-in-out;
   display: none; /* Initially hidden */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10; /* Ensure it appears above other elements */
+}
+
+.loader dotlottie-player {
+  width: 300px; /* Adjust size as needed */
+  height: 300px; /* Adjust size as needed */
 }
 
 @keyframes fadeIn {

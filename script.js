@@ -277,19 +277,8 @@ function showProfile() {
 }
 
 // script.js
-function initializeSwipe() {
-  const cardStack = document.getElementById("card-stack");
-  const hammer = new Hammer(cardStack);
-
-  hammer.on("swipeleft", () => swipe(false)); // Swipe left for red flag
-  hammer.on("swiperight", () => swipe(true)); // Swipe right for green flag
-}
-// script.js
-let isSwiping = false; // Track if a swipe is in progress
-
 function swipe(isGreenFlag) {
-  if (isSwiping || currentProfileIndex >= MAX_SWIPES) return; // Prevent multiple swipes
-  isSwiping = true; // Set swipe in progress
+  if (currentProfileIndex >= MAX_SWIPES) return;
 
   const cardStack = document.getElementById("card-stack");
   const card = cardStack.querySelector(".card");
@@ -297,91 +286,39 @@ function swipe(isGreenFlag) {
   if (card) {
     const currentProfile = card.textContent;
 
-    // Add swipe feedback (inner shadow and circular button) for button clicks
-    if (isGreenFlag) {
-      card.classList.add("swiping-right"); // Add right inner shadow
-      card.innerHTML += `<div class="swipe-icon right"><i class="fas fa-check"></i></div>`; // Add ✓ icon
-    } else {
-      card.classList.add("swiping-left"); // Add left inner shadow
-      card.innerHTML += `<div class="swipe-icon left"><i class="fas fa-times"></i></div>`; // Add X icon
-    }
-
-    // Add points for green flag swipes
     if (isGreenFlag && profileScoring[currentProfile]) {
       for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
         profileScores[type] += points;
       }
     }
 
-    // Add both the swipe and shadow classes
     if (isGreenFlag) {
-      card.classList.add("swipe-right", "swipe-shadow-right");
-      card.classList.remove("swipe-shadow-left");
+      card.classList.add("swipe-right");
     } else {
-      card.classList.add("swipe-left", "swipe-shadow-left");
-      card.classList.remove("swipe-shadow-right");
+      card.classList.add("swipe-left");
     }
 
-    // Remove the swipe icon and inner shadows after the swipe animation
     card.addEventListener("transitionend", () => {
-      if (card.querySelector(".swipe-icon.left")) {
-        card.querySelector(".swipe-icon.left").remove();
-      }
-      if (card.querySelector(".swipe-icon.right")) {
-        card.querySelector(".swipe-icon.right").remove();
-      }
-      card.classList.remove("swiping-left", "swiping-right"); // Remove inner shadows
       card.remove();
+      currentProfileIndex++;
 
-      // Check if this is the final swipe
-      if (currentProfileIndex + 1 >= MAX_SWIPES) {
-        // Show the Lottie loader
+      if (currentProfileIndex < MAX_SWIPES) {
+        nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
+        showProfile();
+      } else {
+        // Show the loader before showing results
         const loader = document.getElementById("loader");
-        loader.style.display = "block"; // Make the loader visible
+        loader.style.display = "block"; // Show the loader
         cardStack.innerHTML = ""; // Clear the card stack
 
-        // Delay the results display by 3 seconds (adjust as needed)
+        // Delay the results display by 1.5 seconds
         setTimeout(() => {
           loader.style.display = "none"; // Hide the loader
           showResult(); // Show the results
-        }, 3000); // 3 seconds delay
-      } else {
-        currentProfileIndex++;
-        nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
-        showProfile();
+        }, 3500); // 1.5 seconds delay
       }
-
-      isSwiping = false; // Reset swipe state
     }, { once: true });
   }
-}
-
-// Initialize Hammer.js for swipe gestures
-initializeSwipe();
-
-// Reinitialize Hammer.js after showing the loader
-function showProfile() {
-  const cardStack = document.getElementById("card-stack");
-  cardStack.innerHTML = "";
-
-  if (currentProfileIndex < Math.min(profiles.length, MAX_SWIPES)) {
-    const cardsToShow = Math.min(3, MAX_SWIPES - currentProfileIndex); // Show fewer cards as we approach the end
-
-    for (let i = 0; i < cardsToShow; i++) {
-      const card = createCard(nextProfiles[i]);
-      cardStack.appendChild(card);
-    }
-
-    const topCard = cardStack.querySelector(".card");
-    if (topCard) {
-      makeDraggable(topCard);
-    }
-  } else {
-    showResult();
-  }
-
-  // Reinitialize Hammer.js after updating the card stack
-  initializeSwipe();
 }
 
 // Function to make a card draggable
@@ -394,9 +331,8 @@ function makeDraggable(card) {
   card.addEventListener("touchmove", drag, { passive: true });
 }
 
-// script.js
+// Start dragging
 function startDrag(e) {
-  console.log("Drag started"); // Debugging
   isDragging = true;
   const card = e.target;
   card.classList.add("dragging");
@@ -409,8 +345,8 @@ function startDrag(e) {
   startY = clientY - card.offsetTop;
 }
 
+// End dragging
 function endDrag(e) {
-  console.log("Drag ended"); // Debugging
   if (!isDragging) return;
 
   const card = e.target;
@@ -433,6 +369,8 @@ function endDrag(e) {
   isDragging = false;
 }
 
+// Drag the card horizontally only
+// script.js
 function drag(e) {
   if (!isDragging) return;
 
@@ -442,38 +380,31 @@ function drag(e) {
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   offsetX = clientX - startX;
 
-  console.log("Dragging", offsetX); // Debugging
-
-  // Add swipe feedback icons and inner shadow
+  // Add swipe feedback icons
   if (offsetX < -50) {
-    // Swiping left: show X icon and left inner shadow
+    // Swiping left: show X icon
     if (!card.querySelector(".swipe-icon.left")) {
       card.innerHTML += `<div class="swipe-icon left"><i class="fas fa-times"></i></div>`;
     }
     if (card.querySelector(".swipe-icon.right")) {
       card.querySelector(".swipe-icon.right").remove();
     }
-    card.classList.add("swiping-left"); // Add left inner shadow
-    card.classList.remove("swiping-right"); // Remove right inner shadow
   } else if (offsetX > 50) {
-    // Swiping right: show ✓ icon and right inner shadow
+    // Swiping right: show ✓ icon
     if (!card.querySelector(".swipe-icon.right")) {
       card.innerHTML += `<div class="swipe-icon right"><i class="fas fa-check"></i></div>`;
     }
     if (card.querySelector(".swipe-icon.left")) {
       card.querySelector(".swipe-icon.left").remove();
     }
-    card.classList.add("swiping-right"); // Add right inner shadow
-    card.classList.remove("swiping-left"); // Remove left inner shadow
   } else {
-    // Reset: remove icons and inner shadows if not swiping far enough
+    // Reset: remove both icons if not swiping far enough
     if (card.querySelector(".swipe-icon.left")) {
       card.querySelector(".swipe-icon.left").remove();
     }
     if (card.querySelector(".swipe-icon.right")) {
       card.querySelector(".swipe-icon.right").remove();
     }
-    card.classList.remove("swiping-left", "swiping-right"); // Remove both inner shadows
   }
 
   // Limit how far the card can be dragged horizontally
@@ -484,36 +415,8 @@ function drag(e) {
   card.style.transform = `translate(${offsetX}px, 0) rotate(${offsetX / 10}deg)`;
 }
 
-function endDrag(e) {
-  if (!isDragging) return;
-
-  const card = e.target;
-  card.classList.remove("dragging");
-
-  // Remove inner shadows when dragging ends
-  card.classList.remove("swiping-left", "swiping-right");
-
-  offsetX = e.touches ? e.changedTouches[0].clientX - startX : e.clientX - startX;
-
-  if (Math.abs(offsetX) > 100) {
-    if (offsetX > 0) {
-      swipe(true); // Green flag
-    } else {
-      swipe(false); // Red flag
-    }
-  } else {
-    // Reset card position
-    card.style.transform = "translate(0, 0) rotate(0)";
-  }
-
-  isDragging = false;
-}
-
 // Update the swipe function to maintain the shadow during the swipe animation
-// script.js
-// script.js
-// script.js
-// script.js
+
 function swipe(isGreenFlag) {
   if (currentProfileIndex >= MAX_SWIPES) return;
 
@@ -523,16 +426,6 @@ function swipe(isGreenFlag) {
   if (card) {
     const currentProfile = card.textContent;
 
-    // Add swipe feedback (inner shadow and circular button) for button clicks
-    if (isGreenFlag) {
-      card.classList.add("swiping-right"); // Add right inner shadow
-      card.innerHTML += `<div class="swipe-icon right"><i class="fas fa-check"></i></div>`; // Add ✓ icon
-    } else {
-      card.classList.add("swiping-left"); // Add left inner shadow
-      card.innerHTML += `<div class="swipe-icon left"><i class="fas fa-times"></i></div>`; // Add X icon
-    }
-
-    // Add points for green flag swipes
     if (isGreenFlag && profileScoring[currentProfile]) {
       for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
         profileScores[type] += points;
@@ -548,34 +441,25 @@ function swipe(isGreenFlag) {
       card.classList.remove("swipe-shadow-right");
     }
 
-    // Remove the swipe icon and inner shadows after the swipe animation
+    // Remove the swipe icon after the swipe animation
+    if (card.querySelector(".swipe-icon.left")) {
+      card.querySelector(".swipe-icon.left").remove();
+    }
+    if (card.querySelector(".swipe-icon.right")) {
+      card.querySelector(".swipe-icon.right").remove();
+    }
+
     card.addEventListener("transitionend", () => {
-      if (card.querySelector(".swipe-icon.left")) {
-        card.querySelector(".swipe-icon.left").remove();
-      }
-      if (card.querySelector(".swipe-icon.right")) {
-        card.querySelector(".swipe-icon.right").remove();
-      }
-      card.classList.remove("swiping-left", "swiping-right"); // Remove inner shadows
       card.remove();
-
-      // Check if this is the final swipe
-      if (currentProfileIndex + 1 >= MAX_SWIPES) {
-        // Show the Lottie loader
-        const loader = document.getElementById("loader");
-        loader.style.display = "block"; // Make the loader visible
-        cardStack.innerHTML = ""; // Clear the card stack
-
-        // Delay the results display by 3 seconds (adjust as needed)
-        setTimeout(() => {
-          loader.style.display = "none"; // Hide the loader
-          showResult(); // Show the results
-        }, 3000); // 3 seconds delay
-      } else {
+      setTimeout(() => {
         currentProfileIndex++;
-        nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
-        showProfile();
-      }
+        if (currentProfileIndex < MAX_SWIPES) {
+          nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
+          showProfile();
+        } else {
+          showResult();
+        }
+      }, 300);
     }, { once: true });
   }
 }
@@ -677,69 +561,47 @@ const resultDescriptions = {
     }
   };
 
-// script.js
-function showResult() {
-  const cardStack = document.getElementById("card-stack");
-  const buttons = document.querySelector(".flag-buttons");
+  function showResult() {
+    const cardStack = document.getElementById("card-stack");
+    const buttons = document.querySelector(".flag-buttons");
 
-  // Hide the buttons
-  buttons.classList.add("hide-buttons");
+    // Hide the buttons
+    buttons.classList.add("hide-buttons");
 
-  // Disable swipe functionality
-  const hammer = new Hammer(cardStack);
-  hammer.off("swipeleft swiperight"); // Remove swipe event listeners
+    // Disable swipe functionality
+    const hammer = new Hammer(cardStack);
+    hammer.off("swipeleft swiperight"); // Remove swipe event listeners
 
-  // Find the type with the highest score
-  let maxScore = -1;
-  let resultType = "";
+    // Find the type with the highest score
+    let maxScore = -1;
+    let resultType = "";
 
-  for (const [type, score] of Object.entries(profileScores)) {
-    if (score > maxScore) {
-      maxScore = score;
-      resultType = type;
+    for (const [type, score] of Object.entries(profileScores)) {
+        if (score > maxScore) {
+            maxScore = score;
+            resultType = type;
+        }
     }
-  }
 
-  // Get the result details
-  const result = resultDescriptions[resultType];
+    // Get the result details
+    const result = resultDescriptions[resultType];
 
-  // Display the result with romantic style, description, and pairing information
-  cardStack.innerHTML = `
-    <div class="card">
-      <h2>Your romantic style is: ${resultType} ${result.emoji}</h2>
-      <p>${result.description}</p>
-      <div class="pairing-info">
-        <h3>You will pair well with a ${result.pairing.style}</h3>
-      </div>
-    </div>
-  `;
-
-  // Reinitialize Hammer.js after showing the result
-  initializeSwipe();
-}
-// script.js
-function initializeSwipe() {
-  const cardStack = document.getElementById("card-stack");
-  const hammer = new Hammer(cardStack);
-
-  hammer.on("swipeleft", () => swipe(false)); // Swipe left for red flag
-  hammer.on("swiperight", () => swipe(true)); // Swipe right for green flag
+    // Display the result with romantic style, description, and pairing information
+    cardStack.innerHTML = `
+        <div class="card">
+            <h2>Your romantic style is: ${resultType} ${result.emoji}</h2>
+            <p>${result.description}</p>
+            <div class="pairing-info">
+                <h3>You will pair well with a ${result.pairing.style}</h3>
+            </div>
+        </div>
+    `;
 }
 
-// Initialize Hammer.js when the page loads
-initializeSwipe();
 
-
-// script.js
-document.getElementById("red-flag").addEventListener("click", () => {
-  console.log("Red flag clicked"); // Debugging
-  swipe(false); // Trigger swipe with red flag feedback
-});
-
-document.getElementById("green-flag").addEventListener("click", () => {
-  console.log("Green flag clicked"); // Debugging
-  swipe(true); // Trigger swipe with green flag feedback
-});
+// Event listeners for the red and green flag buttons
+document.getElementById("red-flag").addEventListener("click", () => swipe(false));
+document.getElementById("green-flag").addEventListener("click", () => swipe(true));
 
 // Ensure that the showProfile function is defined and correctly displays the profile
 showProfile();

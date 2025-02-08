@@ -119,12 +119,6 @@ body {
   gap: 4rem;
   margin-top: 2rem;
 }
-@media (max-width: 600px) {
-  .flag-buttons {
-    gap: 2rem; /* Reduce gap for mobile */
-  }
-}
-
 
 .flag-button {
   width: 64px;
@@ -246,21 +240,17 @@ body {
 }
 
 /* style.css */
+/* style.css */
 .loader {
-  display: none; /* Initially hidden */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
   text-align: center;
-  z-index: 10; /* Ensure it appears above other elements */
-  pointer-events: none; /* Prevent the loader from blocking touch events */
-}
-
-.loader dotlottie-player {
-  width: 300px; /* Adjust size as needed */
-  height: 300px; /* Adjust size as needed */
-  pointer-events: none; /* Prevent the Lottie animation from blocking touch events */
+  margin-top: 40%;
+  margin-bottom: 40%;
+  transform: translateY(-50%);
+  animation: fadeIn 0.5s ease-in-out;
+  display: none; /* Initially hidden */
 }
 
 @keyframes fadeIn {

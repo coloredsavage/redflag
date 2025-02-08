@@ -389,8 +389,9 @@ function makeDraggable(card) {
   card.addEventListener("touchmove", drag, { passive: true });
 }
 
-// Start dragging
+// script.js
 function startDrag(e) {
+  console.log("Drag started"); // Debugging
   isDragging = true;
   const card = e.target;
   card.classList.add("dragging");
@@ -403,8 +404,8 @@ function startDrag(e) {
   startY = clientY - card.offsetTop;
 }
 
-// End dragging
 function endDrag(e) {
+  console.log("Drag ended"); // Debugging
   if (!isDragging) return;
 
   const card = e.target;
@@ -427,9 +428,6 @@ function endDrag(e) {
   isDragging = false;
 }
 
-// Drag the card horizontally only
-// script.js
-// script.js
 function drag(e) {
   if (!isDragging) return;
 
@@ -438,6 +436,8 @@ function drag(e) {
   // Calculate new horizontal position
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   offsetX = clientX - startX;
+
+  console.log("Dragging", offsetX); // Debugging
 
   // Add swipe feedback icons and inner shadow
   if (offsetX < -50) {
@@ -672,42 +672,57 @@ const resultDescriptions = {
     }
   };
 
-  function showResult() {
-    const cardStack = document.getElementById("card-stack");
-    const buttons = document.querySelector(".flag-buttons");
+// script.js
+function showResult() {
+  const cardStack = document.getElementById("card-stack");
+  const buttons = document.querySelector(".flag-buttons");
 
-    // Hide the buttons
-    buttons.classList.add("hide-buttons");
+  // Hide the buttons
+  buttons.classList.add("hide-buttons");
 
-    // Disable swipe functionality
-    const hammer = new Hammer(cardStack);
-    hammer.off("swipeleft swiperight"); // Remove swipe event listeners
+  // Disable swipe functionality
+  const hammer = new Hammer(cardStack);
+  hammer.off("swipeleft swiperight"); // Remove swipe event listeners
 
-    // Find the type with the highest score
-    let maxScore = -1;
-    let resultType = "";
+  // Find the type with the highest score
+  let maxScore = -1;
+  let resultType = "";
 
-    for (const [type, score] of Object.entries(profileScores)) {
-        if (score > maxScore) {
-            maxScore = score;
-            resultType = type;
-        }
+  for (const [type, score] of Object.entries(profileScores)) {
+    if (score > maxScore) {
+      maxScore = score;
+      resultType = type;
     }
+  }
 
-    // Get the result details
-    const result = resultDescriptions[resultType];
+  // Get the result details
+  const result = resultDescriptions[resultType];
 
-    // Display the result with romantic style, description, and pairing information
-    cardStack.innerHTML = `
-        <div class="card">
-            <h2>Your romantic style is: ${resultType} ${result.emoji}</h2>
-            <p>${result.description}</p>
-            <div class="pairing-info">
-                <h3>You will pair well with a ${result.pairing.style}</h3>
-            </div>
-        </div>
-    `;
+  // Display the result with romantic style, description, and pairing information
+  cardStack.innerHTML = `
+    <div class="card">
+      <h2>Your romantic style is: ${resultType} ${result.emoji}</h2>
+      <p>${result.description}</p>
+      <div class="pairing-info">
+        <h3>You will pair well with a ${result.pairing.style}</h3>
+      </div>
+    </div>
+  `;
+
+  // Reinitialize Hammer.js after showing the result
+  initializeSwipe();
 }
+// script.js
+function initializeSwipe() {
+  const cardStack = document.getElementById("card-stack");
+  const hammer = new Hammer(cardStack);
+
+  hammer.on("swipeleft", () => swipe(false)); // Swipe left for red flag
+  hammer.on("swiperight", () => swipe(true)); // Swipe right for green flag
+}
+
+// Initialize Hammer.js when the page loads
+initializeSwipe();
 
 
 // script.js

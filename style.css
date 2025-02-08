@@ -119,6 +119,12 @@ body {
   gap: 4rem;
   margin-top: 2rem;
 }
+@media (max-width: 600px) {
+  .flag-buttons {
+    gap: 2rem; /* Reduce gap for mobile */
+  }
+}
+
 
 .flag-button {
   width: 64px;

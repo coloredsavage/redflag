@@ -284,9 +284,12 @@ function initializeSwipe() {
   hammer.on("swipeleft", () => swipe(false)); // Swipe left for red flag
   hammer.on("swiperight", () => swipe(true)); // Swipe right for green flag
 }
+// script.js
+let isSwiping = false; // Track if a swipe is in progress
 
 function swipe(isGreenFlag) {
-  if (currentProfileIndex >= MAX_SWIPES) return;
+  if (isSwiping || currentProfileIndex >= MAX_SWIPES) return; // Prevent multiple swipes
+  isSwiping = true; // Set swipe in progress
 
   const cardStack = document.getElementById("card-stack");
   const card = cardStack.querySelector(".card");
@@ -347,6 +350,8 @@ function swipe(isGreenFlag) {
         nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
         showProfile();
       }
+
+      isSwiping = false; // Reset swipe state
     }, { once: true });
   }
 }
@@ -727,10 +732,12 @@ initializeSwipe();
 
 // script.js
 document.getElementById("red-flag").addEventListener("click", () => {
+  console.log("Red flag clicked"); // Debugging
   swipe(false); // Trigger swipe with red flag feedback
 });
 
 document.getElementById("green-flag").addEventListener("click", () => {
+  console.log("Green flag clicked"); // Debugging
   swipe(true); // Trigger swipe with green flag feedback
 });
 

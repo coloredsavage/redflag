@@ -1,77 +1,12 @@
-const profiles = [
-  "Thinks the moon landing was staged… but in a cool way.", // Skeptical Realist (2)
-  "Doesn’t trust people who don’t like dogs.", // Emotional Nurturer (2)
-  "Owns way too many novelty mugs.", // The “All About the Little Things” Lover (2)
-  "Can’t stop quoting Mean Girls.", // Passionate Firecracker (2), Independent Adventurer (1)
-  "Thinks they’d be great on Survivor.", // Over-Thinker (2), Hopeless Romantic (1)
-  "Hates when people clap after a plane lands.", // Skeptical Realist (1)
-  "Owns a fanny pack, and actually uses it.", // Independent Adventurer (2)
-  "Uses ‘Yeet’ in every conversation.", // The “All About the Little Things” Lover (1)
-  "Can’t resist taking a nap wherever they are.", // Fun-Loving Foodie (2)
-  "Believes that TikTok is a form of art.", // The “Let’s See What Happens” Type (1)
-  "Has never seen Titanic… but still quotes it.", // The “All About the Little Things” Lover (3)
-  "Has a secret collection of rubber ducks.", // The 'You Can Never Find Love' Type (3)
-  "Can quote every line from The Office.", // The “All About the Little Things” Lover (3)
-  "Believes their spirit animal is a sloth.", // Hopeless Romantic (2)
-  "Refers to themselves as “vibing.”", // The “Let’s See What Happens” Type (3)
-  "Wears sunglasses at night.", // Independent Adventurer (1)
-  "Can’t walk past a vending machine without buying something.", // Fun-Loving Foodie (1)
-  "Holds grudges over minor inconveniences, like when someone cuts in line.", // Independent Adventurer (2)
-  "Never knows what day it is but still manages to show up on time.", // Skeptical Realist (2)
-  "Thinks every song is better if you add a tambourine.", // Fun-Loving Foodie (1), Skeptical Realist (1)
-  "Owns an excessive number of graphic T-shirts.", // The “All About the Little Things” Lover (1)
-  "Always makes awkward small talk with cashiers.", // The “Let’s See What Happens” Type (1)
-  "Will fight you on whether or not pineapple belongs on pizza.", // Passionate Firecracker (2), Fun-Loving Foodie (1)
-  "Can’t pronounce foreign food names correctly, but does it anyway.", // Fun-Loving Foodie (1)
-  "Refuses to use a normal-sized toothbrush, only the giant ones.", // The “All About the Little Things” Lover (1)
-  "Constantly wears a hoodie, even in 90-degree weather.", // Independent Adventurer (3)
-  "Has an irrational fear of escalators.", // Skeptical Realist (3)
-  "Believes that taking a nap makes them a wizard.", // Emotional Nurturer (1)
-  "Knows all the lyrics to Barbie Girl.", // Hopeless Romantic (3)
-  "Uses “I’m not a morning person” as an excuse for everything.", // The “Let’s See What Happens” Type (2)
-  "Is obsessed with watching home renovation shows but doesn’t own a toolbox.", // Over-Thinker (1)
-  "Always orders the same thing at a restaurant, no exceptions.", // Fun-Loving Foodie (2)
-  "Collects empty bottles just for the aesthetic.", // Emotional Nurturer (1)
-  "Thinks the moon controls their mood.", // Over-Thinker (3), Emotional Nurturer (2)
-  "Can’t resist buying things they don’t need during a Target run.", // Fun-Loving Foodie (1), Hopeless Romantic (2)
-  "Hides snacks around the house for later.", // Fun-Loving Foodie (2)
-  "Constantly claims they could’ve been a professional athlete.", // Over-Thinker (2)
-  "Writes in all caps like they’re shouting.", // Passionate Firecracker (1)
-  "Has a conspiracy theory about the Bermuda Triangle.", // Skeptical Realist (1), Over-Thinker (1)
-  "Talks to their plants like they’re friends.", // Emotional Nurturer (3), The 'You Can Never Find Love' Type (1)
-  "Thinks cold pizza is a delicacy.", // Fun-Loving Foodie (3), The “All About the Little Things” Lover (2)
-  "Has a secret stash of candy that they won’t share.", // Fun-Loving Foodie (2)
-  "Prefers to make up their own rules to board games.", // Passionate Firecracker (2)
-  "Has a “life hack” for everything.", // Over-Thinker (1)
-  "Wears band T-shirts but can’t name three songs by the band.", // The “All About the Little Things” Lover (2)
-  "Claims to be “super into yoga” but only does it once a year.", // Skeptical Realist (3)
-  "Can’t decide between being a dog person or a cat person.", // Emotional Nurturer (1)
-  "Has an irrational love for 90s sitcoms.", // Hopeless Romantic (3), The 'You Can Never Find Love' Type (1)
-  "Refers to themselves as “unique” when they’re just a little quirky.", // The “All About the Little Things” Lover (2)
-  "Doesn’t use the ‘just add water’ instructions for instant noodles.", // The “All About the Little Things” Lover (1)
-  "Is constantly trying to start a podcast, but never follows through.", // Over-Thinker (2)
-  "Believes they would make an excellent spy, despite being terrible at keeping secrets.", // Over-Thinker (2)
-  "Still watches cartoons, no shame.", // The 'You Can Never Find Love' Type (1)
-  "Finds it impossible to say ‘no’ to a sale.", // Fun-Loving Foodie (1)
-  "Lives for the drama in reality TV.", // Passionate Firecracker (2)
-  "Has an extensive collection of cat memes.", // The “Let’s See What Happens” Type (1)
-  "Can’t stop talking about their favorite conspiracy theory at parties.", // Passionate Firecracker (3)
-  "Sleeps with a stuffed animal.", // The 'You Can Never Find Love' Type (3), The “Let’s See What Happens” Type (2)
-  "Is obsessed with finding the perfect Instagram filter.", // Independent Adventurer (2)
-  "Unironically loves ASMR videos.", // The “Let’s See What Happens” Type (1)
-  "Spends hours organizing their playlists, but never listens to them.", // Over-Thinker (1)
-  "Takes random polls about silly things.", // The “Let’s See What Happens” Type (1)
-  "Always ends up in awkward situations with their ex.", // The “Let’s See What Happens” Type (2)
-  "Thinks they could survive in the wild without any survival skills.", // Over-Thinker (1)
-  "Is convinced they were a superhero in a past life.", // Over-Thinker (3)
-  "Loves to text in emoji code.", // Passionate Firecracker (1)
-  "Is always late but blames traffic even if it’s 2 AM.", // Emotional Nurturer (2)
-  "Pretends to know how to cook but always orders takeout.", // Fun-Loving Foodie (1)
-  "Can’t resist picking up every stray animal they see.", // Emotional Nurturer (2)
-  "Can’t function without caffeine, but only drinks it with sugar.", // The “Let’s See What Happens” Type (2)
-  "Makes up stories about their “wild adventures” just to sound interesting.", // Over-Thinker (2)
-  "Obsessed with collecting useless trivia." // Over-Thinker (1)
-];
+// Global Variables
+let profiles, profileScoring, quirkEmojis;
+let currentProfileIndex = 0;
+let isDragging = false;
+let startX, startY;
+let offsetX = 0;
+const dragThreshold = 60;
+let nextProfiles = [];
+const MAX_SWIPES = 10;
 
 const profileScores = {
   "Fun-Loving Foodie": 0,
@@ -85,199 +20,81 @@ const profileScores = {
   "The Skeptical Realist": 0,
   "The 'You Can Never Find Love' Type": 0
 };
-const profileScoring = {
-  "Thinks the moon landing was staged… but in a cool way.": { "The Skeptical Realist": 2 },
-  "Doesn’t trust people who don’t like dogs.": { "The Emotional Nurturer": 2 },
-  "Owns way too many novelty mugs.": { "The All About the Little Things Lover": 2 },
-  "Can’t stop quoting Mean Girls.": { "The Passionate Firecracker": 2, "The Independent Adventurer": 1 },
-  "Thinks they’d be great on Survivor.": { "The Over-Thinker": 2, "The Hopeless Romantic": 1 },
-  "Hates when people clap after a plane lands.": { "The Skeptical Realist": 1 },
-  "Owns a fanny pack, and actually uses it.": { "The Independent Adventurer": 2 },
-  "Uses ‘Yeet’ in every conversation.": { "The All About the Little Things Lover": 1 },
-  "Can’t resist taking a nap wherever they are.": { "The Fun-Loving Foodie": 2 },
-  "Believes that TikTok is a form of art.": { "The Let’s See What Happens Type": 1 },
-  "Has never seen Titanic… but still quotes it.": { "The All About the Little Things Lover": 3 },
-  "Has a secret collection of rubber ducks.": { "The 'You Can Never Find Love' Type": 3 },
-  "Can quote every line from The Office.": { "The All About the Little Things Lover": 3 },
-  "Believes their spirit animal is a sloth.": { "The Hopeless Romantic": 2 },
-  "Refers to themselves as “vibing.”": { "The Let’s See What Happens Type": 3 },
-  "Wears sunglasses at night.": { "The Independent Adventurer": 1 },
-  "Can’t walk past a vending machine without buying something.": { "The Fun-Loving Foodie": 1 },
-  "Holds grudges over minor inconveniences, like when someone cuts in line.": { "The Independent Adventurer": 2 },
-  "Never knows what day it is but still manages to show up on time.": { "The Skeptical Realist": 2 },
-  "Thinks every song is better if you add a tambourine.": { "The Fun-Loving Foodie": 1, "The Skeptical Realist": 1 },
-  "Owns an excessive number of graphic T-shirts.": { "The All About the Little Things Lover": 1 },
-  "Always makes awkward small talk with cashiers.": { "The Let’s See What Happens Type": 1 },
-  "Will fight you on whether or not pineapple belongs on pizza.": { "The Passionate Firecracker": 2, "The Fun-Loving Foodie": 1 },
-  "Can’t pronounce foreign food names correctly, but does it anyway.": { "The Fun-Loving Foodie": 1 },
-  "Refuses to use a normal-sized toothbrush, only the giant ones.": { "The All About the Little Things Lover": 1 },
-  "Constantly wears a hoodie, even in 90-degree weather.": { "The Independent Adventurer": 3 },
-  "Has an irrational fear of escalators.": { "The Skeptical Realist": 3 },
-  "Believes that taking a nap makes them a wizard.": { "The Emotional Nurturer": 1 },
-  "Knows all the lyrics to Barbie Girl.": { "The Hopeless Romantic": 3 },
-  "Uses “I’m not a morning person” as an excuse for everything.": { "The Let’s See What Happens Type": 2 },
-  "Is obsessed with watching home renovation shows but doesn’t own a toolbox.": { "The Over-Thinker": 1 },
-  "Always orders the same thing at a restaurant, no exceptions.": { "The Fun-Loving Foodie": 2 },
-  "Collects empty bottles just for the aesthetic.": { "The Emotional Nurturer": 1 },
-  "Thinks the moon controls their mood.": { "The Over-Thinker": 3, "The Emotional Nurturer": 2 },
-  "Can’t resist buying things they don’t need during a Target run.": { "The Fun-Loving Foodie": 1, "The Hopeless Romantic": 2 },
-  "Hides snacks around the house for later.": { "The Fun-Loving Foodie": 2 },
-  "Constantly claims they could’ve been a professional athlete.": { "The Over-Thinker": 2 },
-  "Writes in all caps like they’re shouting.": { "The Passionate Firecracker": 1 },
-  "Has a conspiracy theory about the Bermuda Triangle.": { "The Skeptical Realist": 1, "The Over-Thinker": 1 },
-  "Talks to their plants like they’re friends.": { "The Emotional Nurturer": 3, "The 'You Can Never Find Love' Type": 1 },
-  "Thinks cold pizza is a delicacy.": { "The Fun-Loving Foodie": 3, "The All About the Little Things Lover": 2 },
-  "Has a secret stash of candy that they won’t share.": { "The Fun-Loving Foodie": 2 },
-  "Prefers to make up their own rules to board games.": { "The Passionate Firecracker": 2 },
-  "Has a “life hack” for everything.": { "The Over-Thinker": 1 },
-  "Wears band T-shirts but can’t name three songs by the band.": { "The All About the Little Things Lover": 2 },
-  "Claims to be “super into yoga” but only does it once a year.": { "The Skeptical Realist": 3 },
-  "Can’t decide between being a dog person or a cat person.": { "The Emotional Nurturer": 1 },
-  "Has an irrational love for 90s sitcoms.": { "The Hopeless Romantic": 3, "The 'You Can Never Find Love' Type": 1 },
-  "Refers to themselves as “unique” when they’re just a little quirky.": { "The All About the Little Things Lover": 2 },
-  "Doesn’t use the ‘just add water’ instructions for instant noodles.": { "The All About the Little Things Lover": 1 },
-  "Is constantly trying to start a podcast, but never follows through.": { "The Over-Thinker": 2 },
-  "Believes they would make an excellent spy, despite being terrible at keeping secrets.": { "The Over-Thinker": 2 },
-  "Still watches cartoons, no shame.": { "The 'You Can Never Find Love' Type": 1 },
-  "Finds it impossible to say ‘no’ to a sale.": { "The Fun-Loving Foodie": 1 },
-  "Lives for the drama in reality TV.": { "The Passionate Firecracker": 2 },
-  "Has an extensive collection of cat memes.": { "The Let’s See What Happens Type": 1 },
-  "Can’t stop talking about their favorite conspiracy theory at parties.": { "The Passionate Firecracker": 3 },
-  "Sleeps with a stuffed animal.": { "The 'You Can Never Find Love' Type": 3, "The Let’s See What Happens Type": 2 },
-  "Is obsessed with finding the perfect Instagram filter.": { "The Independent Adventurer": 2 },
-  "Unironically loves ASMR videos.": { "The Let’s See What Happens Type": 1 },
-  "Spends hours organizing their playlists, but never listens to them.": { "The Over-Thinker": 1 },
-  "Takes random polls about silly things.": { "The Let’s See What Happens Type": 1 },
-  "Always ends up in awkward situations with their ex.": { "The Let’s See What Happens Type": 1 }
-};
-let currentProfileIndex = 0;
-let isDragging = false;
-let startX, startY;
-let offsetX = 0;
-const dragThreshold = 60;
-let nextProfiles = [];
-const MAX_SWIPES = 10;
 
-const quirkEmojis = {
-"Thinks the moon landing was staged… but in a cool way.": "🌕", // Moon emoji
-"Doesn’t trust people who don’t like dogs.": "🐶", // Dog emoji
-"Owns way too many novelty mugs.": "☕", // Coffee mug emoji
-"Can’t stop quoting Mean Girls.": "👯", // Dancing women emoji
-"Thinks they’d be great on Survivor.": "🏝️", // Desert island emoji
-"Hates when people clap after a plane lands.": "✈️", // Airplane emoji
-"Owns a fanny pack, and actually uses it.": "👝", // Clutch bag emoji
-"Uses ‘Yeet’ in every conversation.": "💨", // Dashing away emoji
-"Can’t resist taking a nap wherever they are.": "😴", // Sleeping face emoji
-"Believes that TikTok is a form of art.": "🎨", // Artist palette emoji
-"Has never seen Titanic… but still quotes it.": "🚢", // Ship emoji
-"Has a secret collection of rubber ducks.": "🦆", // Duck emoji
-"Can quote every line from The Office.": "📺", // Television emoji
-"Believes their spirit animal is a sloth.": "🦥", // Sloth emoji
-"Refers to themselves as “vibing.”": "🎶", // Musical notes emoji
-"Wears sunglasses at night.": "🕶️", // Sunglasses emoji
-"Can’t walk past a vending machine without buying something.": "🍫", // Chocolate bar emoji
-"Holds grudges over minor inconveniences, like when someone cuts in line.": "😠", // Angry face emoji
-"Never knows what day it is but still manages to show up on time.": "📅", // Calendar emoji
-"Thinks every song is better if you add a tambourine.": "🎶", // Musical notes emoji
-"Owns an excessive number of graphic T-shirts.": "👕", // T-shirt emoji
-"Always makes awkward small talk with cashiers.": "💬", // Speech balloon emoji
-"Will fight you on whether or not pineapple belongs on pizza.": "🍍", // Pineapple emoji
-"Can’t pronounce foreign food names correctly, but does it anyway.": "🍜", // Steaming bowl emoji
-"Refuses to use a normal-sized toothbrush, only the giant ones.": "🪥", // Toothbrush emoji
-"Constantly wears a hoodie, even in 90-degree weather.": "🧥", // Coat emoji
-"Has an irrational fear of escalators.": "🪜", // Ladder emoji
-"Believes that taking a nap makes them a wizard.": "🧙", // Wizard emoji
-"Knows all the lyrics to Barbie Girl.": "🎤", // Microphone emoji
-"Uses “I’m not a morning person” as an excuse for everything.": "🌅", // Sunrise emoji
-"Is obsessed with watching home renovation shows but doesn’t own a toolbox.": "🛠️", // Hammer and wrench emoji
-"Always orders the same thing at a restaurant, no exceptions.": "🍽️", // Fork and knife emoji
-"Collects empty bottles just for the aesthetic.": "🍾", // Bottle with popping cork emoji
-"Thinks the moon controls their mood.": "🌙", // Crescent moon emoji
-"Can’t resist buying things they don’t need during a Target run.": "🛒", // Shopping cart emoji
-"Hides snacks around the house for later.": "🍪", // Cookie emoji
-"Constantly claims they could’ve been a professional athlete.": "🏅", // Medal emoji
-"Writes in all caps like they’re shouting.": "🔊", // Loudspeaker emoji
-"Has a conspiracy theory about the Bermuda Triangle.": "🔺", // Red triangle emoji
-"Talks to their plants like they’re friends.": "🌿", // Herb emoji
-"Thinks cold pizza is a delicacy.": "🍕", // Pizza emoji
-"Has a secret stash of candy that they won’t share.": "🍬", // Candy emoji
-"Prefers to make up their own rules to board games.": "🎲", // Game die emoji
-"Has a “life hack” for everything.": "🛠️", // Hammer and wrench emoji
-"Wears band T-shirts but can’t name three songs by the band.": "🎸", // Guitar emoji
-"Claims to be “super into yoga” but only does it once a year.": "🧘", // Person in lotus position emoji
-"Can’t decide between being a dog person or a cat person.": "🐱", // Cat emoji
-"Has an irrational love for 90s sitcoms.": "📺", // Television emoji
-"Refers to themselves as “unique” when they’re just a little quirky.": "🦄", // Unicorn emoji
-"Doesn’t use the ‘just add water’ instructions for instant noodles.": "🍜", // Steaming bowl emoji
-"Is constantly trying to start a podcast, but never follows through.": "🎙️", // Studio microphone emoji
-"Believes they would make an excellent spy, despite being terrible at keeping secrets.": "🕵️", // Detective emoji
-"Still watches cartoons, no shame.": "📺", // Television emoji
-"Finds it impossible to say ‘no’ to a sale.": "🛍️", // Shopping bags emoji
-"Lives for the drama in reality TV.": "📺", // Television emoji
-"Has an extensive collection of cat memes.": "🐱", // Cat emoji
-"Can’t stop talking about their favorite conspiracy theory at parties.": "🕵️", // Detective emoji
-"Sleeps with a stuffed animal.": "🧸", // Teddy bear emoji
-"Is obsessed with finding the perfect Instagram filter.": "📸", // Camera emoji
-"Unironically loves ASMR videos.": "🎧", // Headphone emoji
-"Spends hours organizing their playlists, but never listens to them.": "🎶", // Musical notes emoji
-"Takes random polls about silly things.": "📊", // Chart increasing emoji
-"Always ends up in awkward situations with their ex.": "😬", // Grimacing face emoji
-"Thinks they could survive in the wild without any survival skills.": "🌲", // Evergreen tree emoji
-"Is convinced they were a superhero in a past life.": "🦸", // Superhero emoji
-"Loves to text in emoji code.": "📱", // Mobile phone emoji
-"Is always late but blames traffic even if it’s 2 AM.": "🚗", // Car emoji
-"Pretends to know how to cook but always orders takeout.": "🍳", // Cooking emoji
-"Can’t resist picking up every stray animal they see.": "🐾", // Paw prints emoji
-"Can’t function without caffeine, but only drinks it with sugar.": "☕", // Coffee mug emoji
-"Makes up stories about their “wild adventures” just to sound interesting.": "🗺️", // World map emoji
-"Obsessed with collecting useless trivia.": "📚" // Books emoji
-};
-// Function to shuffle an array
+// Data Loading
+async function loadData() {
+  try {
+    const responses = await Promise.all([
+      fetch('profiles.json'),
+      fetch('profileScoring.json'),
+      fetch('quirkEmojis.json')
+    ]);
+
+    [profiles, profileScoring, quirkEmojis] = await Promise.all(
+      responses.map(res => res.json())
+    );
+
+    // Initialize after data is loaded
+    shuffleArray(profiles);
+    nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
+    showProfile();
+  } catch (error) {
+    console.error('Error loading data:', error);
+    alert('Failed to load data. Please try again later.');
+  }
+}
+
+// Shuffle Function
 function shuffleArray(array) {
-for (let i = array.length - 1; i > 0; i--) {
-  const j = Math.floor(Math.random() * (i + 1));
-  [array[i], array[j]] = [array[j], array[i]];
-}
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
 }
 
-// Shuffle the profiles array and preload the next two profiles
-shuffleArray(profiles);
-nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
-
+// Card Functions
 function createCard(text) {
-const card = document.createElement("div");
-card.classList.add("card");
+  const card = document.createElement("div");
+  card.classList.add("card");
 
-// Add the emoji and text to the card
-const emoji = quirkEmojis[text] || "❓"; // Default to a question mark if no emoji is found
-card.innerHTML = `<span class="emoji">${emoji}</span> ${text}`;
+  const emoji = quirkEmojis[text] || "❓";
+  card.innerHTML = `
+    <div class="card-header">
+      <span class="emoji">${emoji}</span>
+    </div>
+    <div class="card-content">
+      <p>${text}</p>
+    </div>
+    <div class="card-footer">
+      <img src="collab-logo.png" alt="Logo" class="card-logo">
+    </div>
+  `;
 
-return card;
+  return card;
 }
 
 function showProfile() {
-const cardStack = document.getElementById("card-stack");
-cardStack.innerHTML = "";
+  const cardStack = document.getElementById("card-stack");
+  cardStack.innerHTML = "";
 
-if (currentProfileIndex < Math.min(profiles.length, MAX_SWIPES)) {
-  const cardsToShow = Math.min(3, MAX_SWIPES - currentProfileIndex); // Show fewer cards as we approach the end
+  if (currentProfileIndex < Math.min(profiles.length, MAX_SWIPES)) {
+    const cardsToShow = Math.min(3, MAX_SWIPES - currentProfileIndex);
 
-  for (let i = 0; i < cardsToShow; i++) {
-    const card = createCard(nextProfiles[i]);
-    cardStack.appendChild(card);
+    for (let i = 0; i < cardsToShow; i++) {
+      const card = createCard(nextProfiles[i]);
+      cardStack.appendChild(card);
+    }
+
+    const topCard = cardStack.querySelector(".card");
+    if (topCard) {
+      makeDraggable(topCard);
+    }
+  } else {
+    showResult();
   }
-
-  const topCard = cardStack.querySelector(".card");
-  if (topCard) {
-    makeDraggable(topCard);
-  }
-} else {
-  showResult();
-}
 }
 
-
-// script.js
+// Swipe Function
 function swipe(isGreenFlag) {
   if (currentProfileIndex >= MAX_SWIPES) return;
 
@@ -285,25 +102,22 @@ function swipe(isGreenFlag) {
   const card = cardStack.querySelector(".card");
 
   if (card) {
-    const currentProfile = card.textContent;
+    const currentProfile = card.querySelector('.card-content p').textContent;
 
-    // Add swipe feedback (inner shadow and circular button) for button clicks
     if (isGreenFlag) {
-      card.classList.add("swiping-right"); // Add right inner shadow
-      card.innerHTML += `<div class="swipe-icon right"><i class="fas fa-check"></i></div>`; // Add ✓ icon
+      card.classList.add("swiping-right");
+      card.innerHTML += `<div class="swipe-icon right"><i class="fas fa-check"></i></div>`;
     } else {
-      card.classList.add("swiping-left"); // Add left inner shadow
-      card.innerHTML += `<div class="swipe-icon left"><i class="fas fa-times"></i></div>`; // Add X icon
+      card.classList.add("swiping-left");
+      card.innerHTML += `<div class="swipe-icon left"><i class="fas fa-times"></i></div>`;
     }
 
-    // Add points for green flag swipes
     if (isGreenFlag && profileScoring[currentProfile]) {
       for (const [type, points] of Object.entries(profileScoring[currentProfile])) {
         profileScores[type] += points;
       }
     }
 
-    // Add both the swipe and shadow classes
     if (isGreenFlag) {
       card.classList.add("swipe-right", "swipe-shadow-right");
       card.classList.remove("swipe-shadow-left");
@@ -312,7 +126,6 @@ function swipe(isGreenFlag) {
       card.classList.remove("swipe-shadow-right");
     }
 
-    // Remove the swipe icon and inner shadows after the swipe animation
     card.addEventListener("transitionend", () => {
       if (card.querySelector(".swipe-icon.left")) {
         card.querySelector(".swipe-icon.left").remove();
@@ -320,21 +133,18 @@ function swipe(isGreenFlag) {
       if (card.querySelector(".swipe-icon.right")) {
         card.querySelector(".swipe-icon.right").remove();
       }
-      card.classList.remove("swiping-left", "swiping-right"); // Remove inner shadows
+      card.classList.remove("swiping-left", "swiping-right");
       card.remove();
 
-      // Check if this is the final swipe
       if (currentProfileIndex + 1 >= MAX_SWIPES) {
-        // Show the loader
         const loader = document.getElementById("loader");
-        loader.style.display = "block"; // Make the loader visible
-        cardStack.innerHTML = ""; // Clear the card stack
+        loader.style.display = "block";
+        cardStack.innerHTML = "";
 
-        // Delay the results display by 1.5 seconds
         setTimeout(() => {
-          loader.style.display = "none"; // Hide the loader
-          showResult(); // Show the results
-        }, 1500); // 1.5 seconds delay
+          loader.style.display = "none";
+          showResult();
+        }, 1500);
       } else {
         currentProfileIndex++;
         nextProfiles = profiles.slice(currentProfileIndex, currentProfileIndex + 2);
@@ -344,33 +154,42 @@ function swipe(isGreenFlag) {
   }
 }
 
-// Function to make a card draggable
+// Drag Functions
 function makeDraggable(card) {
-card.addEventListener("mousedown", startDrag);
-card.addEventListener("touchstart", startDrag, { passive: true });
-card.addEventListener("mouseup", endDrag);
-card.addEventListener("touchend", endDrag);
-card.addEventListener("mousemove", drag);
-card.addEventListener("touchmove", drag, { passive: true });
+  // Allow the whole card to be draggable, including its text
+  card.querySelectorAll('*').forEach(element => {
+      element.style.userSelect = 'none';
+      element.style.pointerEvents = 'auto';  // Allow interaction with text while dragging
+      element.draggable = false;
+  });
+
+  card.style.userSelect = 'none';
+  card.style.pointerEvents = 'auto';
+  
+  card.addEventListener("mousedown", startDrag);
+  card.addEventListener("touchstart", startDrag, { passive: true });
+  document.addEventListener("mouseup", endDrag);
+  document.addEventListener("touchend", endDrag);
+  document.addEventListener("mousemove", drag);
+  document.addEventListener("touchmove", drag, { passive: true });
 }
 
-// Start dragging
 function startDrag(e) {
-isDragging = true;
-const card = e.target;
-card.classList.add("dragging");
+  isDragging = true;
+  const card = e.currentTarget;
 
-// Get the initial touch/mouse position
-const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  card.classList.add("dragging");
 
-startX = clientX - card.offsetLeft;
-startY = clientY - card.offsetTop;
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+  startX = clientX - card.offsetLeft;
+  startY = clientY - card.offsetTop;
+
+  // Prevent default behavior
+  e.preventDefault();
 }
 
-// End dragging
-// script.js
-// script.js
 function drag(e) {
   if (!isDragging) return;
 
@@ -447,7 +266,6 @@ function endDrag(e) {
 }
 
 isDragging = false;
-// Add emojis based on the type
 const resultDescriptions = {
   "Fun-Loving Foodie": {
       emoji: "🍕",
@@ -520,51 +338,148 @@ const resultDescriptions = {
       }
   }
 };
-
+// Result Functions
 function showResult() {
   const cardStack = document.getElementById("card-stack");
   const buttons = document.querySelector(".flag-buttons");
 
-  // Hide the buttons
-  buttons.classList.add("hide-buttons");
-
-  // Disable swipe functionality
-  const hammer = new Hammer(cardStack);
-  hammer.off("swipeleft swiperight"); // Remove swipe event listeners
+  // Hide the buttons if they exist
+  if (buttons) {
+    buttons.style.display = "none";
+  }
 
   // Find the type with the highest score
   let maxScore = -1;
   let resultType = "";
-
+  
   for (const [type, score] of Object.entries(profileScores)) {
-      if (score > maxScore) {
-          maxScore = score;
-          resultType = type;
-      }
+    if (score > maxScore) {
+      maxScore = score;
+      resultType = type;
+    }
+  }
+
+  // Fallback to a default type if no clear winner
+  if (!resultType) {
+    resultType = "The Let's See What Happens Type";
   }
 
   // Get the result details
   const result = resultDescriptions[resultType];
 
-  // Display the result with romantic style, description, and pairing information
-  cardStack.innerHTML = `
-      <div class="card">
-          <h2>Your romantic style is: ${resultType} ${result.emoji}</h2>
-          <p>${result.description}</p>
-          <div class="pairing-info">
-              <h3>You will pair well with a ${result.pairing.style}</h3>
-          </div>
+  // Create result card
+  const resultCard = document.createElement('div');
+  resultCard.classList.add('result-card');
+  
+  resultCard.innerHTML = `
+    <div class="result-content">
+      <div class="result-header">
+        <span class="result-emoji">${result.emoji}</span>
+        <h2 class="result-title">Your Romantic Style Is:</h2>
+        <h3 class="result-type">${resultType}</h3>
       </div>
+      
+      <div class="result-description">
+        <p>${result.description}</p>
+      </div>
+      
+      <div class="result-pairing">
+        <h4 class="pairing-title">Perfect Match ${result.pairing.style === resultType ? '💘' : '❤️'}</h4>
+        <p class="pairing-text">You will pair well with:</p>
+        <h3 class="pairing-type">${result.pairing.style}</h3>
+      </div>
+    </div>
   `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .result-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .result-header {
+      margin-bottom: 2rem;
+    }
+
+    .result-emoji {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .result-header h2 {
+      color: #666;
+      font-size: 1.5rem;
+      margin: 0.5rem 0;
+    }
+
+    .result-header h3 {
+      color: #333;
+      font-size: 2rem;
+      margin: 0.5rem 0;
+      font-weight: bold;
+    }
+
+    .result-description {
+      margin: 2rem 0;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+
+    .result-description p {
+      color: #444;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .result-pairing {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 2px solid #f0f0f0;
+    }
+
+    .result-pairing h4 {
+      color: #666;
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+    }
+
+    .result-pairing p {
+      color: #888;
+      margin: 0.5rem 0;
+    }
+
+    .result-pairing h3 {
+      color: #333;
+      font-size: 1.5rem;
+      margin: 0.5rem 0;
+      font-weight: bold;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Clear and display result
+  cardStack.innerHTML = '';
+  cardStack.appendChild(resultCard);
 }
 
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById("red-flag").addEventListener("click", () => {
+    swipe(false);
+  });
 
-document.getElementById("red-flag").addEventListener("click", () => {
-  swipe(false); // Trigger swipe with red flag feedback
+  document.getElementById("green-flag").addEventListener("click", () => {
+    swipe(true);
+  });
 });
 
-document.getElementById("green-flag").addEventListener("click", () => {
-  swipe(true); // Trigger swipe with green flag feedback
-});
-// Ensure that the showProfile function is defined and correctly displays the profile
-showProfile();
+// Start the App
+loadData();
